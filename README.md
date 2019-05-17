@@ -1,2 +1,2 @@
-# stunning-potato
+# Mascotas
 aplicación para encontrar mascotas perdidas
