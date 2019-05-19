@@ -28,6 +28,7 @@ var UsersSchema = new Schema({
     timestamps: true
 })
 
+
 UsersSchema.methods.setPassword = function (password) {
     this.password = bcrypt.hashSync(password, 8);
     //   this.salt = crypto.randomBytes(16).toString('hex');
@@ -59,5 +60,12 @@ UsersSchema.methods.toAuthJSON = function () {
         token: this.generateJWT(),
     };
 };
+
+// UsersSchema.methods.toProfileUser = function () {
+//     return {
+//         _id: this._id,
+//         email: this.email,
+//     };
+// };
 
 mongoose.model('Users', UsersSchema);

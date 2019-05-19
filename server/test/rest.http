@@ -13,9 +13,9 @@ content-type: application/json
 
 {
     "user":{
-        "name": "sample",
-       "last_name":"foo",
-     "email":"mail14@lito.com",
+        "name": "TEST",
+       "last_name":"TESTT",
+     "email":"mail30@lito.com",
     "password":"1234"
     }
 }
@@ -23,8 +23,7 @@ content-type: application/json
 ###
 GET  http://localhost:3000/api/me HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwxNEBsaXRvLmNvbSIsImlkIjoiNWNkZTVlYTBhMmY1ZDgyYjU4ZTJkMzNiIiwiZXhwIjoxNTYzMjYxMDg4LCJpYXQiOjE1NTgwNzcwODh9.9crLg0OnX29bX9JC4RnQnfnOoJEhQqpsWzbqgnEc20Y
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwzQGxpdG8uY29tIiwiaWQiOiI1Y2RlMmRjNGZlOWU4MDAyMjk2MjdkYTUiLCJleHAiOjE1NjM0NzI0MDEsImlhdCI6MTU1ODI4ODQwMX0.Vo_T71s382X6WgGYKQkkDHbJpx_nCwZBvqn1WZjyPBM
 ### good passwod
 POST  http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
@@ -32,7 +31,7 @@ content-type: application/json
 {
     "user":
         {
-    "email":"mail3@lito.com",
+    "email":"mail25@lito.com",
     "password":"1234"
     }
 }
@@ -42,6 +41,7 @@ POST  http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
 
 {
-"user":{    "email":"mail3@lito.com",
+"user":{    
+    "email":"mail3@lito.com",
     "password":"12345"}
 }

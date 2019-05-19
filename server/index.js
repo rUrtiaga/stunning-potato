@@ -5,6 +5,7 @@ const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
+const passport = require('passport');
 
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
@@ -33,6 +34,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+app.use(passport.initialize())
 
 if (!isProduction) {
   app.use(errorHandler());
@@ -65,17 +67,18 @@ if (!isProduction) {
       },
     });
   });
+} else {
+  app.use((err, req, res) => {
+    res.status(err.status || 500);
+
+    res.json({
+      errors: {
+        message: err.message,
+        error: {},
+      },
+    });
+  });
 }
 
-app.use((err, req, res) => {
-  res.status(err.status || 500);
-
-  res.json({
-    errors: {
-      message: err.message,
-      error: {},
-    },
-  });
-});
 
 app.listen(3000, () => console.log('Server running on http://localhost:3000/'));
