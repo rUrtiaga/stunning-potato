@@ -33,8 +33,27 @@ function verifyToken(req, res, next) {
     });
 }
 
+function checkTokenId(req, res, next) {
+    const id = req.params.id;
+
+    if (!id)
+        return res.status(403).send({
+            auth: false,
+            message: 'No token or id provided.'
+        });
+    if (req.userId !== id) {
+        return res.status(403).send({
+            auth: false,
+            message: 'No rights for do this'
+        });
+    }
+    next();
+
+}
+
 const auth = {
-    required: verifyToken
+    required: verifyToken,
+    checkIdentity: checkTokenId
 };
 
 module.exports = auth;

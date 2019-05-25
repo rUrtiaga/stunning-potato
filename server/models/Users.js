@@ -11,6 +11,7 @@ var jwt_key = jwt_token();
 const {
     Schema
 } = mongoose;
+const PetsSchema = require("./Pets");
 
 var UsersSchema = new Schema({
     name: String,
@@ -20,6 +21,7 @@ var UsersSchema = new Schema({
         unique: true
     },
     password: String,
+    pets: [PetsSchema]
     // image:String
 
     //   hash: String,
@@ -60,6 +62,12 @@ UsersSchema.methods.toAuthJSON = function () {
         token: this.generateJWT(),
     };
 };
+
+UsersSchema.methods.addPet = function (pet) {
+    let lenght = this.pets.push(pet)
+    return this.pets[lenght - 1]._id
+};
+
 
 // UsersSchema.methods.toProfileUser = function () {
 //     return {

@@ -6,6 +6,7 @@ var auth = require('./auth')
 
 //Models
 const Users = mongoose.model('Users');
+const Searchs = mongoose.model('Searches_pet');
 
 router.route('/register').post(function (req, res) {
     const {
@@ -133,6 +134,60 @@ router.route('/me').get(auth.required, function (req, res) {
                 user: user
             });
         }).catch((e) => res.sendStatus(500).json(e));
+
+});
+
+
+router.route('/users/:id/pets').post(auth.required, auth.checkIdentity, function (req, res) {
+    const pet = req.body.pet;
+    Users.findById(req.params.id)
+        .then((user) => {
+            if (!user) {
+                return res.sendStatus(400);
+            }
+            let id_newPet = user.addPet(pet)
+            user.save()
+            return id_newPet;
+        }).then((id_newPet) => res.status(201).json({
+            id_newPet
+        }))
+        .catch((e) => res.status(500).json(e));
+
+});
+
+router.route('/users/:id/pets/:id_pet/search').post(auth.required, auth.checkIdentity, function (req, res) {
+    const id_user = req.params.id;
+    const id_pet = req.params.id_pet;
+    Users.findById(id_user)
+        .then((user) => {
+            if (!user) {
+                return res.sendStatus(400);
+            }
+            //validate no pet
+
+            let pet = user.pets.id(id_pet)
+
+            let pet_search = {
+                pet: pet._id,
+                name: pet.name,
+                age: pet.age,
+                species: pet.species,
+                location: req.body.location,
+                date: new Date(req.body.date)
+            }
+
+            //creo la busqueda
+            let mongo_search = new Searchs(pet_search)
+            //guardo el id de la busqueda en la mascota
+            pet.search = mongo_search.id
+
+            //hago efectivo los cambios en db
+            mongo_search.save()
+            user.save()
+
+        })
+        .then(() => res.sendStatus(201))
+        .catch((e) => res.status(500).json(e));
 
 });
 
