@@ -66,7 +66,7 @@ router.route("/login").post(function (req, res, next) {
     const user = req.body.user;
 
     if (!user.email) {
-        return res.status(422).json({
+        return res.status(401).json({
             errors: {
                 email: "is required"
             }
@@ -74,7 +74,7 @@ router.route("/login").post(function (req, res, next) {
     }
 
     if (!user.password) {
-        return res.status(422).json({
+        return res.status(401).json({
             errors: {
                 password: "is required"
             }
@@ -218,19 +218,26 @@ router
                 console.log(e);
                 res.status(500).json(e);
             });
+    })
+    .delete(auth.required, auth.checkIdentity, function (req, res) {
+        const id_user = req.params.id;
+        const id_pet = req.params.id_pet;
+
     });
 
 router.route("/lostpets").get(function (req, res, next) {
     location = req.body.location
     Searchs.find({
-        location: {
-            $geoWithin: {
-                $centerSphere: [location.coordinates, 3.1 / 3963.2]
+            location: {
+                $geoWithin: {
+                    $centerSphere: [location.coordinates, 3.1 / 3963.2]
+                }
             }
-        }
-    }).then(list_serchs => {
-        res.json(list_serchs);
-    }).catch(e => console.log(e))
+        })
+        .select('name age species location.coordinates date')
+        .then(list_serchs => {
+            res.json(list_serchs);
+        }).catch(e => console.log(e))
 })
 
 module.exports = router;
