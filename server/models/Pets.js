@@ -18,12 +18,6 @@ var PetsSchema = new Schema({
 })
 
 
-PetsSchema.method.updateSearch = function (id_search) {
-    this.search = id_search
-    return this.save()
-}
-
-
 const pointSchema = new Schema({
     type: {
         type: String,
@@ -46,9 +40,9 @@ var SearchesSchema = new Schema({
     age: String,
     location: pointSchema,
     date: {
-        type: Date
-        // ,
-        // required: true
+        type: Date,
+        required: true,
+        min: '2019-03-20'
     }
 
     // pics:[String]

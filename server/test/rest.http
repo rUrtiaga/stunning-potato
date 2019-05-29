@@ -61,6 +61,13 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
     }
 }
 
+### Get pets from user 
+GET http://localhost:3000/api/users/5ce1b137e0137b3802648da1/pets HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlMWIxMzdlMDEzN2IzODAyNjQ4ZGExIiwiZXhwIjoxNTYzODU3MTgyLCJpYXQiOjE1NTg2NzMxODJ9.18k-dgdISclZidbh66arwqYHxK3C_cs4boC6cRfLxPk
+
+
+
 ### Add new search to pet
 POST http://localhost:3000/api/users/5ce1b137e0137b3802648da1/pets/5ce77a7496a2071f0b7d70a7/search HTTP/1.1
 content-type: application/json
@@ -74,5 +81,19 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
             37.7
         ]
     },
-    "date": "2010-01-01T00:00:00.000Z"
+    "date": "2019-05-01T00:00:00.000Z"
+}
+
+### Get pets arrownd me
+GET http://localhost:3000/api/lostpets HTTP/1.1
+content-type: application/json
+
+{
+    "location":{
+        "type" : "Point",
+        "coordinates" : [
+            -35.522620524394135,
+            -58.30532461073403
+        ]
+    }
 }

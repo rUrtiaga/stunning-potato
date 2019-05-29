@@ -21,6 +21,7 @@ function verifyToken(req, res, next) {
             auth: false,
             message: 'No token provided.'
         });
+    console.log(token)
     jwt.verify(token, jwt_key, function (err, decoded) {
         if (err)
             return res.status(500).send({

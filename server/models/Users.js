@@ -68,6 +68,10 @@ UsersSchema.methods.addPet = function (pet) {
     return this.pets[lenght - 1]._id
 };
 
+UsersSchema.method.usersForClient = function () {
+    //TODO    
+}
+
 
 // UsersSchema.methods.toProfileUser = function () {
 //     return {
