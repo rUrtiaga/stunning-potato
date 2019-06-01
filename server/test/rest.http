@@ -23,7 +23,7 @@ content-type: application/json
 ###
 GET  http://localhost:3000/api/me HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwzQGxpdG8uY29tIiwiaWQiOiI1Y2RlMmRjNGZlOWU4MDAyMjk2MjdkYTUiLCJleHAiOjE1NjM0NzI0MDEsImlhdCI6MTU1ODI4ODQwMX0.Vo_T71s382X6WgGYKQkkDHbJpx_nCwZBvqn1WZjyPBM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0MzQ4NjM5LCJpYXQiOjE1NTkxNjQ2Mzl9.Nfw8LOx1uDHLQodBquWS3n_1gHpoXLgwEhKRLqmUIZM
 ### good passwod
 POST  http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
@@ -97,3 +97,8 @@ content-type: application/json
         ]
     }
 }
+
+### Add new search to pet
+DELETE http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf21f96b177bc2560245347/search HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NTU1ODEyLCJpYXQiOjE1NTkzNzE4MTJ9.sDL88rumweDCM-1VkNrZ-Vktgr5OnN5xA7F4A2MfD8A

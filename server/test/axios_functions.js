@@ -7,7 +7,7 @@ async function loadPet(axios, id_user_loged, pet) {
     let res = await axios.post(`/users/${id_user_loged}/pets/`, {
         pet
     })
-    return res.data
+    return res.data.id
 }
 
 async function newSearch(axios, id_user_loged, id_pet, location, date) {
@@ -66,12 +66,19 @@ async function loadExamplePetsWithSerchs(axios, id_user_loged) {
     }]
 
     for (let index = 0; index < list_pets_ids.length; index++) {
-        await newSearch(axios, id_user_loged, list_pets_ids[index].id, locations[index], new Date())
+        await newSearch(axios, id_user_loged, list_pets_ids[index], locations[index], new Date())
     }
+    return list_pets_ids
+}
 
+function removePets(axios, user_data) {
+    return axios.delete(`/users/${user_data._id}/pets/`, {
+        data: user_data.pets_ids,
+    })
 }
 
 module.exports = {
+    removePets,
     loadExamplePets,
     obtainPetsFromId,
     loadPet,

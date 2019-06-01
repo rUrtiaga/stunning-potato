@@ -168,6 +168,32 @@ router
             })
             .then(pets => res.status(200).json(pets))
             .catch(e => res.sendStatus(500));
+    })
+    .delete(auth.required, auth.checkIdentity, function (req, res) {
+        Users.findById(req.params.id)
+            .then(async user => {
+                if (!user) {
+                    return res.sendStatus(400);
+                }
+                pets_ids = req.body
+                console.log(pets_ids)
+                try {
+                    await pets_ids.forEach(async id => {
+                        let pet = await user.pets.id(id);
+                        await pet.deleteSearch()
+                    });
+                    await pets_ids.forEach(async id => {
+                        await user.pets.pull({
+                            _id: id
+                        })
+                    })
+                    await user.save();
+                } catch (error) {
+                    console.log(error)
+                    res.sendStatus(500)
+                }
+                res.sendStatus(200)
+            })
     });
 
 router
@@ -222,15 +248,27 @@ router
     .delete(auth.required, auth.checkIdentity, function (req, res) {
         const id_user = req.params.id;
         const id_pet = req.params.id_pet;
+        Users.findById(id_user)
+            .then(
+                async user => {
+                    let pet = await user.pets.id(id_pet);
+                    return await pet.deleteSearch(user)
+                }
+            )
+            .then(() => res.sendStatus(200))
+            .catch(e => console.log(e))
 
     });
 
 router.route("/lostpets").get(function (req, res, next) {
-    location = req.body.location
+    console.log(req.query)
+    location = req.query
     Searchs.find({
             location: {
                 $geoWithin: {
-                    $centerSphere: [location.coordinates, 3.1 / 3963.2]
+                    $centerSphere: [
+                        [location.lat, location.long], 3.1 / 3963.2
+                    ]
                 }
             }
         })

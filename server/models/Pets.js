@@ -17,6 +17,18 @@ var PetsSchema = new Schema({
     timestamps: true
 })
 
+PetsSchema.methods.deleteSearch = async function (user) {
+    try {
+        await Searchs.findByIdAndDelete(this.search);
+    } catch (error) {
+        console.log(error)
+    }
+    this.search = null;
+    if (user) {
+        await user.save()
+    }
+}
+
 
 const pointSchema = new Schema({
     type: {
@@ -52,7 +64,7 @@ var SearchesSchema = new Schema({
 
 
 mongoose.model('Pets', PetsSchema);
-mongoose.model('Searches_pet', SearchesSchema);
+Searchs = mongoose.model('Searches_pet', SearchesSchema);
 
 
 module.exports = PetsSchema
