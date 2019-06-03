@@ -169,32 +169,40 @@ router
             .then(pets => res.status(200).json(pets))
             .catch(e => res.sendStatus(500));
     })
-    .delete(auth.required, auth.checkIdentity, function (req, res) {
-        Users.findById(req.params.id)
-            .then(async user => {
-                if (!user) {
-                    return res.sendStatus(400);
-                }
-                pets_ids = req.body
-                console.log(pets_ids)
-                try {
-                    await pets_ids.forEach(async id => {
-                        let pet = await user.pets.id(id);
-                        await pet.deleteSearch()
-                    });
-                    await pets_ids.forEach(async id => {
-                        await user.pets.pull({
-                            _id: id
-                        })
+    .delete(auth.required, auth.checkIdentity, deletePets);
+
+function deletePets(req, res, next) {
+    Users.findById(req.params.id)
+        .then(async user => {
+            if (!user) {
+                return res.sendStatus(400);
+            }
+
+            pets_ids = (req.params.id_pet) ? [req.params.id_pet] : req.body
+            try {
+                await pets_ids.forEach(async id => {
+                    let pet = await user.pets.id(id);
+                    await pet.deleteSearch()
+                });
+                await pets_ids.forEach(async id => {
+                    await user.pets.pull({
+                        _id: id
                     })
-                    await user.save();
-                } catch (error) {
-                    console.log(error)
-                    res.sendStatus(500)
-                }
-                res.sendStatus(200)
-            })
-    });
+                })
+                await user.save();
+            } catch (error) {
+                next(error)
+                // console.log(error)
+                // res.sendStatus(500)
+            }
+            res.sendStatus(200)
+        })
+}
+
+
+router
+    .route("/users/:id/pets/:id_pet")
+    .delete(auth.required, auth.checkIdentity, deletePets)
 
 router
     .route("/users/:id/pets/:id_pet/search")

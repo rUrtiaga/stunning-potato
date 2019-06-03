@@ -15,7 +15,6 @@ async function obtainPetsFromId(id) {
     return res.data
 }
 
-//TODO make after all que borre
 describe("Pets", () => {
 
     beforeAll(async () => {
@@ -43,6 +42,7 @@ describe("Pets", () => {
             })
             .then(r => {
                 expect(r.status).toBe(201);
+                pet_id = r.data.id
                 done();
             })
             .catch(e => {
@@ -51,9 +51,8 @@ describe("Pets", () => {
     });
 
     test("create search", async done => {
-        petsFromUser = await obtainPetsFromId(user_loged._id)
-        // console.log(petsFromUser)
-        idPet = petsFromUser[0]._id
+        // petsFromUser = await obtainPetsFromId(user_loged._id)
+        // idPet = petsFromUser[0]._id
 
         let location = {
             "type": "Point",
@@ -66,7 +65,7 @@ describe("Pets", () => {
 
 
         return axios
-            .post(`/users/${user_loged._id}/pets/${idPet}/search`, {
+            .post(`/users/${user_loged._id}/pets/${pet_id}/search`, {
                 location,
                 date
             })
@@ -78,4 +77,10 @@ describe("Pets", () => {
                 console.log(e);
             });
     });
+
+    test("remove particular pet with search", async done => {
+        let r = await axios.delete(`/users/${user_loged._id}/pets/${pet_id}`)
+        expect(r.status).toBe(200)
+        done()
+    })
 })

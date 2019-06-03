@@ -8,7 +8,6 @@ const axios = axios_lib.create({
     timeout: 1000
 })
 
-//TODO make after all que borre
 describe("Search", () => {
 
     beforeAll(async () => {
