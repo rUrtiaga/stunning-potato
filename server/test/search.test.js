@@ -11,7 +11,7 @@ const axios = axios_lib.create({
 describe("Search", () => {
 
     beforeAll(async () => {
-        let res = await axios.post("/login/", {
+        let res = await axios.post("/auth/login/", {
             "user": {
                 "email": "mail25@lito.com",
                 "password": "1234"
@@ -37,7 +37,6 @@ describe("Search", () => {
             }
         })
         expect(res.data.length).toEqual(2)
-
         done()
     });
 

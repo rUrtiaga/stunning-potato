@@ -57,39 +57,39 @@ app.use('/api', apiRouter);
 
 
 //Error handlers & middlewares
-app.use(function (e, req, res, next) {
-  console.log(e);
-  if (e.status) {
-    res.status(e.status).send(e.objectForClient);
-  } else {
-    res.status(500).send({
-      message: e.message
+// app.use(function (e, req, res, next) {
+//   console.log(e);
+//   if (e.status) {
+//     res.status(e.status).send(e.objectForClient);
+//   } else {
+//     res.status(500).send({
+//       message: e.message
+//     });
+//   }
+// });
+if (!isProduction) {
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+
+    res.json({
+      errors: {
+        message: err.message,
+        error: err,
+      },
     });
-  }
-});
-// if (!isProduction) {
-//   app.use((err, req, res) => {
-//     res.sendStatus(err.status || 500);
+  });
+} else {
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
 
-//     res.json({
-//       errors: {
-//         message: err.message,
-//         error: err,
-//       },
-//     });
-//   });
-// } else {
-//   app.use((err, req, res) => {
-//     res.status(err.status || 500);
-
-//     res.json({
-//       errors: {
-//         message: err.message,
-//         error: {},
-//       },
-//     });
-//   });
-// }
+    res.json({
+      errors: {
+        message: err.message,
+        error: {},
+      },
+    });
+  });
+}
 
 
 app.listen(3000, () => console.log('Server running on http://localhost:3000/'));

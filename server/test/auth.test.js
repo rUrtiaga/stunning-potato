@@ -21,7 +21,7 @@ describe("Auth", () => {
             password: "1234"
         }
         return axios
-            .post("/register/", {
+            .post("/auth/register/", {
                 user
             })
             .then(r => {
@@ -37,7 +37,7 @@ describe("Auth", () => {
         test("usuario inexistente", async () => {
             let res;
             try {
-                await axios.post("/login/", {
+                await axios.post("/auth/login/", {
                     "user": {
                         "email": "mail20@lito.com",
                         "password": "1234"
@@ -54,7 +54,7 @@ describe("Auth", () => {
         test("user without password", async () => {
             let res;
             try {
-                await axios.post("/login/", {
+                await axios.post("/auth/login/", {
                     "user": {
                         "email": "mail20@lito.com"
                     }
@@ -70,7 +70,7 @@ describe("Auth", () => {
         test("user without email", async () => {
             let res;
             try {
-                await axios.post("/login/", {
+                await axios.post("/auth/login/", {
                     "user": {
                         "password": "1234"
                     }
@@ -88,7 +88,7 @@ describe("Auth", () => {
     describe("Loged Request", () => {
 
         beforeAll(async () => {
-            let res = await axios.post("/login/", {
+            let res = await axios.post("/auth/login/", {
                 "user": {
                     "email": "mail25@lito.com",
                     "password": "1234"

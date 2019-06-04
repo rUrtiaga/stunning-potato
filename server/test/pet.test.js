@@ -18,7 +18,7 @@ async function obtainPetsFromId(id) {
 describe("Pets", () => {
 
     beforeAll(async () => {
-        let res = await axios.post("/login/", {
+        let res = await axios.post("/auth/login/", {
             "user": {
                 "email": "mail25@lito.com",
                 "password": "1234"

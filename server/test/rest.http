@@ -8,7 +8,7 @@ content-type: application/json
 }
 
 ### 
-POST http://localhost:3000/api/register HTTP/1.1
+POST http://localhost:3000/api/auth/register HTTP/1.1
 content-type: application/json
 
 {
@@ -23,9 +23,9 @@ content-type: application/json
 ###
 GET  http://localhost:3000/api/me HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0MzQ4NjM5LCJpYXQiOjE1NTkxNjQ2Mzl9.Nfw8LOx1uDHLQodBquWS3n_1gHpoXLgwEhKRLqmUIZM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NzI3MjUwLCJpYXQiOjE1NTk1NDMyNTB9.871OptD0oVSwoQinBMEElbhj6Lsxp_Loic-lcYkUiEg
 ### good passwod
-POST  http://localhost:3000/api/login HTTP/1.1
+POST  http://localhost:3000/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
@@ -37,7 +37,7 @@ content-type: application/json
 }
 
 ### Bad password
-POST  http://localhost:3000/api/login HTTP/1.1
+POST  http://localhost:3000/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
@@ -48,9 +48,9 @@ content-type: application/json
 
 
 ### Add new pet to user 5ce77a7496a2071f0b7d70a7
-POST http://localhost:3000/api/users/5ce1b137e0137b3802648da1/pets HTTP/1.1
+POST http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlMWIxMzdlMDEzN2IzODAyNjQ4ZGExIiwiZXhwIjoxNTYzODU3MTgyLCJpYXQiOjE1NTg2NzMxODJ9.18k-dgdISclZidbh66arwqYHxK3C_cs4boC6cRfLxPk
+Authorization: eyJhbGciwiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NzY3ODExLCJpYXQiOjE1NTk1ODM4MTF9.5LY02Kq6mMgv7OsU1BcHBTXWvpD0n6_odT5yDyvfJbs
 
 {
     "pet":{
@@ -86,17 +86,11 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
 
 ### Get pets arrownd me
 GET http://localhost:3000/api/lostpets HTTP/1.1
+    ?lat=-35.522620524394135
+    &long=-58.30532461073403 
 content-type: application/json
 
-{
-    "location":{
-        "type" : "Point",
-        "coordinates" : [
-            -35.522620524394135,
-            -58.30532461073403
-        ]
-    }
-}
+
 
 ### Add new search to pet
 DELETE http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf21f96b177bc2560245347/search HTTP/1.1

@@ -62,6 +62,10 @@ var SearchesSchema = new Schema({
     timestamps: true
 })
 
+SearchesSchema.index({
+    location: "2dsphere"
+})
+
 
 mongoose.model('Pets', PetsSchema);
 Searchs = mongoose.model('Searches_pet', SearchesSchema);
