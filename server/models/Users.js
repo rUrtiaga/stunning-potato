@@ -6,7 +6,7 @@ var {
     jwt_token
 } = require("../jwt_token")
 var jwt_key = jwt_token();
-
+const fs = require('fs');
 
 const {
     Schema
@@ -21,8 +21,8 @@ var UsersSchema = new Schema({
         unique: true
     },
     password: String,
-    pets: [PetsSchema]
-    // image:String
+    pets: [PetsSchema],
+    avatar: String
 
     //   hash: String,
     //   salt: String,
@@ -68,10 +68,20 @@ UsersSchema.methods.addPet = function (pet) {
     return this.pets[lenght - 1]._id
 };
 
-UsersSchema.method.usersForClient = function () {
+UsersSchema.methods.usersForClient = function () {
     //TODO    
 }
 
+UsersSchema.methods.updateAvatar = async function (path) {
+
+    if (fs.existsSync(this.avatar)) {
+        await fs.unlink(this.avatar, function (err) {
+            if (err) throw err;
+        });
+    }
+
+    this.avatar = path;
+};
 
 // UsersSchema.methods.toProfileUser = function () {
 //     return {

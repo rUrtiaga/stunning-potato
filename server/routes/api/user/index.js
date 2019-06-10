@@ -5,6 +5,7 @@ const deletePets = require("./pet/deletePets");
 
 userRouter.all("/:id/*", auth.required, auth.checkIdentity)
 
+//Pets
 userRouter.route("/:id/pets")
     .post(require("./pet/newPet"))
     .get(require("./pet/obtainPets"))
