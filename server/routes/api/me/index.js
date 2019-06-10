@@ -1,15 +1,32 @@
 meRouter = require('express').Router();
 auth = require("../../auth");
 var multer = require('multer')
+fs = require('fs')
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        dir = `./uploads/${req.userId}`
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+        cb(null, dir)
+    },
+    filename: function (req, file, cb) {
+        cb(null, "avatar")
+    }
+})
 var upload = multer({
-    dest: 'uploads/users-avatars'
+    storage: storage
 })
 
+meRouter.all('*', auth.required)
 
 meRouter.route("/")
-    .get(auth.required, require('./me'))
+    .get(require('./me'))
 
 meRouter.route("/avatar")
-    .post(auth.required, upload.single('avatar'), require("./avatar/upload"))
+    .post(
+        upload.single('avatar'), require("./avatar/upload"))
+    .get(require("./avatar/obtain"))
+    .delete(require("./avatar/remove"))
 
 module.exports = meRouter;

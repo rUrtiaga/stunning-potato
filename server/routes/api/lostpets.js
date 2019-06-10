@@ -41,5 +41,5 @@ module.exports = function (req, res, next) {
         ])
         .then(list_serchs => {
             res.json(list_serchs);
-        }).catch(e => console.log(e))
+        }).catch(e => next(e))
 }

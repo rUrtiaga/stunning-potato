@@ -62,9 +62,9 @@ Authorization: eyJhbGciwiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
 }
 
 ### Get pets from user 
-GET http://localhost:3000/api/users/5ce1b137e0137b3802648da1/pets HTTP/1.1
+GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlMWIxMzdlMDEzN2IzODAyNjQ4ZGExIiwiZXhwIjoxNTYzODU3MTgyLCJpYXQiOjE1NTg2NzMxODJ9.18k-dgdISclZidbh66arwqYHxK3C_cs4boC6cRfLxPk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
 
 
 

@@ -7,7 +7,8 @@ module.exports = function (req, res) {
     return Users.findById(id, {
             name: 1,
             last_name: 1,
-            email: 1
+            email: 1,
+            avatar: 1
         })
         .then(user => {
             if (!user) {

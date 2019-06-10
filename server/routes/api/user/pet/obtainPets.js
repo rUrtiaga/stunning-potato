@@ -6,8 +6,7 @@ module.exports = function (req, res) {
             if (!user) {
                 return res.sendStatus(400);
             }
-            // return user.petsForClient()
-            return user;
+            return user.petsForClient()
         })
         .then(pets => res.status(200).json(pets))
         .catch(e => res.sendStatus(500));

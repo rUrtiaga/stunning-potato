@@ -4,24 +4,14 @@ var {
 } = require('../jwt_token')
 jwt_key = jwt_token();
 
-// function splitToken(authorization) {
-//     if (authorization && authorization.split(' ')[0] === 'Token') {
-//         return authorization.split(' ')[1];
-//     }
-// }
 
 function verifyToken(req, res, next) {
     var token = req.headers['authorization'];
-    console.log(req.headers)
-    // if (token) {
-    //     token = splitToken(token)[1];
-    // }
     if (!token)
         return res.status(403).send({
             auth: false,
             message: 'No token provided.'
         });
-    console.log(token)
     jwt.verify(token, jwt_key, function (err, decoded) {
         if (err)
             return res.status(500).send({

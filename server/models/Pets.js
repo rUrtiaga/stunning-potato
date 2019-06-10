@@ -55,9 +55,8 @@ var SearchesSchema = new Schema({
         type: Date,
         required: true,
         min: '2019-03-20'
-    }
-
-    // pics:[String]
+    },
+    pics: [String]
 }, {
     timestamps: true
 })

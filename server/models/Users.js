@@ -6,7 +6,6 @@ var {
     jwt_token
 } = require("../jwt_token")
 var jwt_key = jwt_token();
-const fs = require('fs');
 
 const {
     Schema
@@ -22,10 +21,7 @@ var UsersSchema = new Schema({
     },
     password: String,
     pets: [PetsSchema],
-    avatar: String
-
-    //   hash: String,
-    //   salt: String,
+    avatar: Boolean
 }, {
     timestamps: true
 })
@@ -33,14 +29,10 @@ var UsersSchema = new Schema({
 
 UsersSchema.methods.setPassword = function (password) {
     this.password = bcrypt.hashSync(password, 8);
-    //   this.salt = crypto.randomBytes(16).toString('hex');
-    //   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
 UsersSchema.methods.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.password)
-    //   const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-    //   return this.hash === hash;
 };
 
 UsersSchema.methods.generateJWT = function () {
@@ -72,15 +64,13 @@ UsersSchema.methods.usersForClient = function () {
     //TODO    
 }
 
-UsersSchema.methods.updateAvatar = async function (path) {
+UsersSchema.methods.petsForClient = function () {
+    return this.pets
+}
 
-    if (fs.existsSync(this.avatar)) {
-        await fs.unlink(this.avatar, function (err) {
-            if (err) throw err;
-        });
-    }
 
-    this.avatar = path;
+UsersSchema.methods.updateAvatar = function (path) {
+    this.avatar = true;
 };
 
 // UsersSchema.methods.toProfileUser = function () {
