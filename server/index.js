@@ -44,10 +44,13 @@ if (!isProduction) {
 mongoose.connect('mongodb://127.0.0.1/pets', {
   useNewUrlParser: true
 });
+mongoose.set('debug', !isProduction);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-mongoose.set('debug', true);
 
 //Models and routes
+require('./models/Search');
 require('./models/Pets');
 require('./models/Users');
 require('./config/passport');
@@ -69,6 +72,9 @@ app.use('/api', apiRouter);
 // });
 if (!isProduction) {
   app.use((err, req, res, next) => {
+    if (res.headersSent) {
+      return next(err);
+    }
     res.status(err.status || 500);
 
     res.json({
@@ -80,6 +86,9 @@ if (!isProduction) {
   });
 } else {
   app.use((err, req, res, next) => {
+    if (res.headersSent) {
+      return next(err);
+    }
     res.status(err.status || 500);
 
     res.json({

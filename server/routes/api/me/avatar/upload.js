@@ -8,7 +8,8 @@ module.exports = function (req, res, next) {
         if (!user) {
             res.sendStatus(400)
         }
-        user.updateAvatar(path)
+        // user.updateAvatar(path)
+        user.setAvatar(true)
         user.save()
         return user
     }).then(r => {

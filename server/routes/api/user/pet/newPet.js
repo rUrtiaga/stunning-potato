@@ -2,7 +2,7 @@ const Users = require('mongoose').model('Users')
 
 module.exports = function (req, res) {
     const pet = req.body.pet;
-    console.log(req.params)
+
     Users.findById(req.params.id)
         .then(user => {
             if (!user) {
