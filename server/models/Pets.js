@@ -54,6 +54,21 @@ class Pet {
             this.deleteImagePet(fileName);
         });
     }
+
+    removePic(id_pic) {
+        this.deleteImagePet(id_pic);
+        if (this.principalPic == id_pic) {
+            this.principalPic = null;
+            return true;
+        }
+        if (this.pics.length == 0) {
+            throw "pic reference not found"
+        }
+        let indexInPics = this.pics.findIndex(f => f == id_pic);
+        if (indexInPics != -1) {
+            this.pics.splice(indexInPics)
+        }
+    }
 }
 
 PetsSchema.loadClass(Pet)

@@ -79,7 +79,7 @@ if (!isProduction) {
 
     res.json({
       errors: {
-        message: err.message,
+        message: err.msj || err.message,
         error: err,
       },
     });
@@ -93,7 +93,7 @@ if (!isProduction) {
 
     res.json({
       errors: {
-        message: err.message,
+        message: err.msj || err.message,
         error: {},
       },
     });

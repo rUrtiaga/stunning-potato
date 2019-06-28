@@ -40,6 +40,7 @@ describe("Search", () => {
         done()
     });
 
+    //TODO
     test("delete search for particular pet", async done => {
         let pets = await aux.obtainPetsFromId(axios, user_loged._id)
         console.log(pets)
