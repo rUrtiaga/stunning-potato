@@ -35,17 +35,20 @@ userRouter.route("/:id/pets/:id_pet")
     .delete(deletePets)
 
 //PICS
-userRouter.route(":id/pets/:id_pet/pics")
-    .post(upload.fields([{
-        name: 'principal',
-        maxCount: 1
-    }, {
-        name: 'pics',
-        maxCount: 4
-    }]), require("./pet/pics/uploadPics"))
+userRouter.route("/:id/pets/:id_pet/pics")
+    .post(
+        upload.fields([{
+            name: 'principal',
+            maxCount: 1
+        }, {
+            name: 'pics',
+            maxCount: 4
+        }]), require("./pet/pics/uploadPics"))
+    .get(require("./pet/pics/obtainPics"))
 
 userRouter.route("/:id/pets/:id_pet/pics/:id_pic")
     .delete(require("./pet/pics/removePic"))
+    .get(require("./pet/pics/obtainPic"))
 
 userRouter.route("/:id/pets/:id_pet/search")
     .post(require("./pet/search/newSearch"))

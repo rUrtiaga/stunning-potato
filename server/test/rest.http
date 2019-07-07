@@ -92,8 +92,8 @@ content-type: application/json
 
 
 
-### Add new search to pet
-DELETE http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf21f96b177bc2560245347/search HTTP/1.1
+### delete search from pet
+DELETE http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/search HTTP/1.1
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NTU1ODEyLCJpYXQiOjE1NTkzNzE4MTJ9.sDL88rumweDCM-1VkNrZ-Vktgr5OnN5xA7F4A2MfD8A
 
@@ -125,7 +125,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
 
 
 ### Test image pets
-POST  http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2
+POST  http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY2MzQxMTI3LCJpYXQiOjE1NjExNTcxMjd9.MrOAYZBGud_GSqBqJNeCEA0kzYs_0xxIsvWJclZ3BCs
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -136,15 +136,9 @@ principal
 Content-Disposition: form-data; name="principal"; filename="1.png"
 Content-Type: image/png
 
-< ./1.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="pics"; filename="1.png"
-Content-Type: image/png
-
-< ./1.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="pics"; filename="1.png"
-Content-Type: image/png
-
-< ./1.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+### remove pics pics1561313565493
+DELETE   http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics/pics1561313565493
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc

@@ -37,7 +37,11 @@ describe("Users", () => {
           }
         })
         .then(r => {
-          done();
+          //check upload
+          axios.get("/me/avatar/").then(res => {
+            expect(res.data == file);
+            done();
+          });
         })
         .catch(e => {
           fail("ocurrió un error");

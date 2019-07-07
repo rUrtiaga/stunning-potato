@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
-
+const Searchs = mongoose.model("Searches_pet");
+const fs = require('fs')
 const {
     Schema
 } = mongoose;
+
+
 
 var PetsSchema = new Schema({
     name: String,
@@ -19,6 +22,17 @@ var PetsSchema = new Schema({
 })
 
 class Pet {
+    picsDir() {
+        return `./uploads/${this.parent().id}/${this.id}/`
+    }
+
+    getDirPic(pic_name) {
+        if (!this.principalPic == pic_name || this.pics.some(pn => pn == pic_name)) {
+            throw "pic name not found for this pet"
+        }
+        return this.picsDir() + pic_name
+    }
+
     async deleteSearch(user) {
         try {
             await Searchs.findByIdAndDelete(this.search);
@@ -37,6 +51,13 @@ class Pet {
         this.principalPic = fileName;
     }
 
+    getAllPics() {
+        return {
+            principal: this.principalPic,
+            pics: this.pics
+        }
+    }
+
     setPics(fileNames) {
         if (this.pics.length > 0) {
             this.deleteImagesPet(this.pics)
@@ -45,8 +66,7 @@ class Pet {
     }
 
     deleteImagePet(fileName) {
-        const dir = `./uploads/${this.parent().id}/${this.id}/`
-        fs.unlinkSync(dir + fileName)
+        fs.unlinkSync(this.picsDir() + fileName)
     }
 
     deleteImagesPet(arrayFilesNames) {
