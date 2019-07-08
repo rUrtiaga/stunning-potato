@@ -39,7 +39,9 @@ describe("Users", () => {
         .then(r => {
           //check upload
           axios.get("/me/avatar/").then(res => {
-            expect(res.data == file);
+            expect(res).toEqual(expect.objectContaining({
+              status: 200
+            }));
             done();
           });
         })

@@ -107,7 +107,12 @@ describe("Pets", () => {
                 .then(async r => {
                     //check upload
                     response = await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics`)
-                    expect(await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics/${response.data.principal}`) == file)
+                    expect(await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics/${response.data.principal}`)).toEqual(expect.objectContaining({
+                        status: 200,
+                        statusText: "OK"
+                    }))
+
+                    // expect(await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics/${response.data.principal}`).data).toBe(file)
                     done()
 
                 })
