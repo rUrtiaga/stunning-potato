@@ -66,7 +66,11 @@ class Pet {
     }
 
     deleteImagePet(fileName) {
-        fs.unlinkSync(this.picsDir() + fileName)
+        let dir = this.picsDir();
+        fs.unlinkSync(dir + fileName)
+        if (fs.readdirSync(dir) == 0) {
+            fs.rmdirSync(dir)
+        }
     }
 
     deleteImagesPet(arrayFilesNames) {

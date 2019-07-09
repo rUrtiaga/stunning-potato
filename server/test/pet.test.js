@@ -30,7 +30,6 @@ describe("Pets", () => {
         axios.defaults.headers.common['authorization'] = user_loged.token
     })
 
-
     test("create pet", done => {
         let pet = {
             species: "dog",
@@ -82,6 +81,7 @@ describe("Pets", () => {
     });
 
     afterAll(async () => {
+        await removeAllImages();
         await axios.delete(`/users/${user_loged._id}/pets/${pet_id}`)
     })
     // test("remove particular pet with search", async done => {
@@ -111,10 +111,7 @@ describe("Pets", () => {
                         status: 200,
                         statusText: "OK"
                     }))
-
-                    // expect(await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics/${response.data.principal}`).data).toBe(file)
                     done()
-
                 })
                 .catch(e => {
                     console.log(e)
@@ -143,7 +140,10 @@ describe("Pets", () => {
                     //check upload
                     response = await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics`)
                     expect(response.data.pics.length).toBe(2);
-                    expect(await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics/${response.data.principal}`) == file)
+                    expect(await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics/${response.data.principal}`)).toEqual(expect.objectContaining({
+                        status: 200,
+                        statusText: "OK"
+                    }))
                     done()
 
                 })
@@ -156,3 +156,21 @@ describe("Pets", () => {
 
     })
 })
+
+async function removeAllImages() {
+    let imagesNames = await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics`)
+    let proms = []
+    let data = imagesNames.data
+    console.log(imagesNames.data)
+    if (data.principal) {
+        proms.push(deleteImage(data.principal));
+    }
+    data.pics.forEach(name => {
+        proms.push(deleteImage(name))
+    });
+    return Promise.all(proms)
+}
+
+async function deleteImage(imageName) {
+    return axios.delete(`/users/${user_loged._id}/pets/${pet_id}/pics/${imageName}`)
+}
