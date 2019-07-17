@@ -43,8 +43,12 @@ if (!isProduction) {
 //Configure Mongoose
 mongoose.connect('mongodb://127.0.0.1/pets', {
   useNewUrlParser: true
+}).then(() => {
+  console.log("Connect to DB success")
+}).catch(e => {
+  console.log("DB connect ERROR", e)
 });
-mongoose.set('debug', !isProduction);
+mongoose.set('debug', isProduction);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -70,7 +74,7 @@ app.use('/api', apiRouter);
 //     });
 //   }
 // });
-if (!isProduction) {
+if (isProduction) {
   app.use((err, req, res, next) => {
     console.log(err)
     if (res.headersSent) {

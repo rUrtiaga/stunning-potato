@@ -50,7 +50,7 @@ content-type: application/json
 ### Add new pet to user 5ce77a7496a2071f0b7d70a7
 POST http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciwiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NzY3ODExLCJpYXQiOjE1NTk1ODM4MTF9.5LY02Kq6mMgv7OsU1BcHBTXWvpD0n6_odT5yDyvfJbs
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY5MTc1NDk2LCJpYXQiOjE1NjM5OTE0OTZ9.UWYoLsimYb7QQcj0cszvbrGj9g8Dd3A7zmS6diG4Qmg
 
 {
     "pet":{
@@ -66,6 +66,11 @@ GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
 
+
+### Get pet from user 
+GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5d389ddb20e1dd2b468c9cb7 HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY5MTc1NDk2LCJpYXQiOjE1NjM5OTE0OTZ9.UWYoLsimYb7QQcj0cszvbrGj9g8Dd3A7zmS6diG4Qmg
 
 
 ### Add new search to pet
