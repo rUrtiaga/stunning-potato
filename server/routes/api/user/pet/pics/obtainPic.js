@@ -8,9 +8,7 @@ module.exports = function (req, res, next) {
     const id_pic = req.params.id_pic
 
     Users.findById(id).then(async user => {
-        let pet = user.pets.id(id_pet)
-        let dir = pet.getDirPic(id_pic)
-        res.sendFile(dir, {
+        res.sendFile(user.pets.id(id_pet).getDirPic(id_pic), {
             root: '.'
         })
     })

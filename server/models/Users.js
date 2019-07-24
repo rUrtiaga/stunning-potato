@@ -70,6 +70,10 @@ class Person {
     setAvatar(bool) {
         this.avatar = bool;
     };
+
+    findPetForClient(id_pet) {
+        return this.pets.id(id_pet)
+    }
 }
 
 UsersSchema.loadClass(Person)

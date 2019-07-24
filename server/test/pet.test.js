@@ -2,8 +2,14 @@ const axios_lib = require("axios");
 const fs = require("fs");
 const FormData = require("form-data");
 
-//Ejecutar estos test en una base de datos vacia
+//Ejecutar estos test en una base de datos que tenga un usuario
 let user_loged;
+let pet = {
+    species: "dog",
+    sex: "female",
+    age: "young",
+    name: "Chipolin"
+}
 let pet_id;
 
 const axios = axios_lib.create({
@@ -30,14 +36,12 @@ describe("Pets", () => {
         axios.defaults.headers.common['authorization'] = user_loged.token
     })
 
-    test("create pet", done => {
-        let pet = {
-            species: "dog",
-            sex: "female",
-            age: "young",
-            name: "Chipolin"
-        }
+    afterAll(async () => {
+        await removeAllImages();
+        await axios.delete(`/users/${user_loged._id}/pets/${pet_id}`)
+    })
 
+    test("create pet", done => {
         return axios
             .post(`users/${user_loged._id}/pets`, {
                 pet
@@ -52,10 +56,20 @@ describe("Pets", () => {
             });
     });
 
-    test("create search", async done => {
-        // petsFromUser = await obtainPetsFromId(user_loged._id)
-        // idPet = petsFromUser[0]._id
+    test("d get pet", done => {
+        return axios
+            .get(`users/${user_loged._id}/pets/${pet_id}`)
+            .then(r => {
+                expect(r.status).toBe(200);
+                expect(r.data.name).toBe(pet.name)
+                done();
+            })
+            .catch(e => {
+                fail(e)
+            });
+    });
 
+    test("create search", async done => {
         let location = {
             "type": "Point",
             "coordinates": [
@@ -64,7 +78,6 @@ describe("Pets", () => {
             ]
         }
         let date = "2019-05-01T00:00:00.000Z"
-
 
         return axios
             .post(`/users/${user_loged._id}/pets/${pet_id}/search`, {
@@ -80,10 +93,6 @@ describe("Pets", () => {
             });
     });
 
-    afterAll(async () => {
-        await removeAllImages();
-        await axios.delete(`/users/${user_loged._id}/pets/${pet_id}`)
-    })
     // test("remove particular pet with search", async done => {
     //     let r = await axios.delete(`/users/${user_loged._id}/pets/${pet_id}`)
     //     expect(r.status).toBe(200)
@@ -97,7 +106,6 @@ describe("Pets", () => {
             file = fs.createReadStream(path);
             form = new FormData();
             form.append("principal", file);
-            // console.log(form)
             axios
                 .post(`/users/${user_loged._id}/pets/${pet_id}/pics`, form, {
                     headers: {
@@ -129,7 +137,7 @@ describe("Pets", () => {
             form.append("principal", file);
             form.append("pics", file);
             form.append("pics", file);
-            // console.log(form)
+
             axios
                 .post(`/users/${user_loged._id}/pets/${pet_id}/pics`, form, {
                     headers: {
@@ -161,7 +169,6 @@ async function removeAllImages() {
     let imagesNames = await axios.get(`/users/${user_loged._id}/pets/${pet_id}/pics`)
     let proms = []
     let data = imagesNames.data
-    console.log(imagesNames.data)
     if (data.principal) {
         proms.push(deleteImage(data.principal));
     }

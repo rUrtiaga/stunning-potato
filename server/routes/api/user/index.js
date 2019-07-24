@@ -32,6 +32,7 @@ userRouter.route("/:id/pets")
 
 
 userRouter.route("/:id/pets/:id_pet")
+    .get(require("./pet/obtainPet"))
     .delete(deletePets)
 
 //PICS
