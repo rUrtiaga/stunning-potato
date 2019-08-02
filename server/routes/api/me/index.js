@@ -22,6 +22,7 @@ meRouter.all('*', auth.required)
 
 meRouter.route("/")
     .get(require('./me'))
+    .put(require('./modifyUser'))
 
 meRouter.route("/avatar")
     .post(

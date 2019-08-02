@@ -2,7 +2,7 @@ const axios_lib = require("axios");
 const fs = require("fs");
 const FormData = require("form-data");
 
-//Ejecutar estos test en una base de datos vacia
+//Ejecutar estos test en una base de datos con un usuario (auth.test.js crea uno)
 let user_loged;
 
 const axios = axios_lib.create({
@@ -21,6 +21,30 @@ describe("Users", () => {
     user_loged = res.data.user;
     axios.defaults.headers.common["authorization"] = user_loged.token;
   });
+
+  describe("User update", () => {
+    test("obtain user data", done => {
+      axios.get("/me").then(r => {
+        expect(r).toEqual(expect.objectContaining({
+          status: 200
+        }));
+        expect(r.data.user).toEqual(expect.objectContaining({
+          email: 'mail25@lito.com'
+        }));
+        done();
+      })
+    })
+    test("update name", done => {
+      axios.put("/me", {
+        name: "Cuarto"
+      }).then(r => {
+        expect(r).toEqual(expect.objectContaining({
+          status: 200
+        }));
+        done()
+      })
+    })
+  })
 
   describe("Avatar image", () => {
     test("upload image", done => {
