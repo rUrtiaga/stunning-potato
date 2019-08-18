@@ -78,6 +78,10 @@ class Person {
 
     //Others
 
+    removeToken() {
+        this.pass_reset = {};
+    }
+
     addPet(pet) {
         let lenght = this.pets.push(pet)
         return this.pets[lenght - 1]._id

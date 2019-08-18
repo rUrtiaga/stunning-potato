@@ -32,7 +32,7 @@ content-type: application/json
     "user":
         {
     "email":"MAIL",
-    "password":"1234"
+    "password":"abcd"
     }
 }
 
@@ -60,9 +60,9 @@ POST  http://localhost:3000/api/auth/restore HTTP/1.1
 content-type: application/json
 
 {
-    "email":"MAIL",
+    "email":"mail",
     "token":"$2a$04$m6nPSKHEouFqHk2VOOhLQO",
-    "password":"abcd"
+    "password":"abcd1"
 }
 
 
