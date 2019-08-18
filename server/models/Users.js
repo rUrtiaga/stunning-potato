@@ -60,6 +60,11 @@ class Person {
         };
     };
 
+    isSameResetPassToken(token) {
+        return this.pass_reset.token === token
+    }
+
+
     static async isRegistered(email) {
         return (await this.getUserByEmail(email)).length === 1
     }

@@ -3,7 +3,7 @@ let mailConfig = require("../../../../config").gmail
 let transporter = nodemailer.createTransport(mailConfig);
 
 module.exports = async function (email, token) {
-    let link = `http://localhost:3000/restore?token=${token}`
+    let link = `http://localhost:3000/restore?email=${email}?token=${token}`
     let message = {
         to: email,
         subject: 'Mascotas - Restaurar Contraseña',

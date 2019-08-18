@@ -31,7 +31,7 @@ content-type: application/json
 {
     "user":
         {
-    "email":"ramirourtiaga@gmail.com",
+    "email":"MAIL",
     "password":"1234"
     }
 }
@@ -54,6 +54,16 @@ content-type: application/json
     "email":"MAIL"
 }
 
+
+### FORGOT password
+POST  http://localhost:3000/api/auth/restore HTTP/1.1
+content-type: application/json
+
+{
+    "email":"MAIL",
+    "token":"$2a$04$m6nPSKHEouFqHk2VOOhLQO",
+    "password":"abcd"
+}
 
 
 ### Add new pet to user 5ce77a7496a2071f0b7d70a7
