@@ -1,4 +1,4 @@
-const config = require('./config.json');
+const config = require('./config.js');
 module.exports.jwt_token = function () {
-    return process.env.JWT_TOKEN || config.JWT_TOKEN;
+    return config.JWT_TOKEN;
 }

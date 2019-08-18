@@ -20,7 +20,11 @@ var UsersSchema = new Schema({
     },
     password: String,
     pets: [PetsSchema],
-    avatar: Boolean
+    avatar: Boolean,
+    pass_reset: {
+        token: String,
+        expiration_date: Number
+    }
 }, {
     timestamps: true
 })
@@ -55,6 +59,17 @@ class Person {
             token: this.generateJWT(),
         };
     };
+
+    static async isRegistered(email) {
+        return (await this.getUserByEmail(email)).length === 1
+    }
+
+    //Devuelve una lista
+    static getUserByEmail(email) {
+        return this.find({
+            email
+        }).exec()
+    }
 
     //Others
 

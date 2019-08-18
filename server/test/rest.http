@@ -31,7 +31,7 @@ content-type: application/json
 {
     "user":
         {
-    "email":"mail25@lito.com",
+    "email":"ramirourtiaga@gmail.com",
     "password":"1234"
     }
 }
@@ -45,6 +45,15 @@ content-type: application/json
     "email":"mail3@lito.com",
     "password":"12345"}
 }
+
+### FORGOT password
+POST  http://localhost:3000/api/auth/forgot HTTP/1.1
+content-type: application/json
+
+{
+    "email":"MAIL"
+}
+
 
 
 ### Add new pet to user 5ce77a7496a2071f0b7d70a7

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Users = mongoose.model("Users");
 
-module.exports = function (req, res) {
+module.exports = async function (req, res) {
     const {
         body: {
             user
@@ -20,6 +20,14 @@ module.exports = function (req, res) {
         return res.status(422).json({
             errors: {
                 password: "is required"
+            }
+        });
+    }
+
+    if (await Users.isRegistered(user.email)) {
+        return res.status(409).json({
+            errors: {
+                email: "already registered"
             }
         });
     }
