@@ -53,6 +53,7 @@ userRouter.route("/:id/pets/:id_pet/pics/:id_pic")
 
 userRouter.route("/:id/pets/:id_pet/search")
     .post(require("./pet/search/newSearch"))
+    .get(require("./pet/search/obtainSearch"))
     .delete(require("./pet/search/removeSearch"))
 
 

@@ -56,13 +56,13 @@ content-type: application/json
 
 
 ### FORGOT password
-POST  http://localhost:3000/api/auth/restore HTTP/1.1
+PUT  http://localhost:3000/api/auth/restore HTTP/1.1
 content-type: application/json
 
 {
-    "email":"mail",
-    "token":"$2a$04$m6nPSKHEouFqHk2VOOhLQO",
-    "password":"abcd1"
+    "email":"MAIL",
+    "token":"$2a$04$luAimd2kGOBIYVQiuaEbqO",
+    "password":"123456"
 }
 
 
