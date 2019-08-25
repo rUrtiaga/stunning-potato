@@ -31,8 +31,8 @@ content-type: application/json
 {
     "user":
         {
-    "email":"MAIL",
-    "password":"abcd"
+    "email":"mail25@lito.com",
+    "password":"1234"
     }
 }
 
@@ -83,13 +83,17 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
 ### Get pets from user 
 GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
 
 ### Get pet from user 
-GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5d389ddb20e1dd2b468c9cb7 HTTP/1.1
+GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327 HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY5MTc1NDk2LCJpYXQiOjE1NjM5OTE0OTZ9.UWYoLsimYb7QQcj0cszvbrGj9g8Dd3A7zmS6diG4Qmg
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
+
+### Get search from user 
+GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327/search HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
 
 
 ### Add new search to pet
@@ -107,6 +111,16 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
     },
     "date": "2019-05-01T00:00:00.000Z"
 }
+
+### Get pet search
+GET http://localhost:3000/api/pets/5d389ee63c06762de788d327/search HTTP/1.1
+content-type: application/json
+
+### Get pet contact
+GET http://localhost:3000/api/pets/5d389ee63c06762de788d327/contact HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxODcyMjQ5LCJpYXQiOjE1NjY2ODgyNDl9.Z5p3YOdFJbLfG0UjoVGN022ZIhVzYOxewjuR-nd0WXk 
+
 
 ### Get pets arrownd me
 GET http://localhost:3000/api/lostpets HTTP/1.1

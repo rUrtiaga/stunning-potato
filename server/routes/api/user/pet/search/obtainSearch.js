@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 
 const Users = mongoose.model("Users");
-// const Searchs = mongoose.model("Searches_pet");
 
 module.exports = function (req, res, next) {
     Users.findById(req.params.id)

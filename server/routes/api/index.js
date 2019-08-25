@@ -5,5 +5,6 @@ apiRouter.use("/auth", require('./auth'))
 apiRouter.use("/lostpets", require('./lostpets'))
 apiRouter.use("/me", require('./me'))
 apiRouter.use("/users", require('./user'))
+apiRouter.use("/pets", require('./pet'))
 
 module.exports = apiRouter;

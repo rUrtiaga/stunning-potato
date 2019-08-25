@@ -18,9 +18,14 @@ var UsersSchema = new Schema({
         type: String,
         unique: true
     },
+    phone: Number,
     password: String,
     pets: [PetsSchema],
     avatar: Boolean,
+    // contact: {
+    //     phone: Boolean,
+    //     email: Boolean
+    // },
     pass_reset: {
         token: String,
         expiration_date: Number
@@ -78,6 +83,17 @@ class Person {
 
     //Others
 
+    getContactInfo() {
+        let info = {};
+        // if (this.phone && this.contact.phone) {
+        info.phone = this.phone
+        // }
+        // if (this.email && this.contact.email) {
+        info.email = this.email
+        // }
+        return info
+    }
+
     removeToken() {
         this.pass_reset = {};
     }
@@ -93,7 +109,7 @@ class Person {
 
     setAvatar(bool) {
         this.avatar = bool;
-    };
+    }
 
     findPetForClient(id_pet) {
         return this.pets.id(id_pet)

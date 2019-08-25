@@ -28,9 +28,6 @@ userRouter.route("/:id/pets")
     .get(require("./pet/obtainPets"))
     .delete(deletePets)
 
-// userRouter.route("/:id/pets/:id")
-
-
 userRouter.route("/:id/pets/:id_pet")
     .get(require("./pet/obtainPet"))
     .delete(deletePets)

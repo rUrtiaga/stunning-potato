@@ -35,8 +35,29 @@ var SearchesSchema = new Schema({
     timestamps: true
 })
 
+class Search {
+
+    static findByIdPet(id) {
+        return this.findOne({
+            pet: id
+        }).select({
+            pics: 1,
+            pet: 1,
+            name: 1,
+            age: 1,
+            species: 1,
+            location: 1,
+            date: 1
+        })
+    }
+}
+
+
 SearchesSchema.index({
     location: "2dsphere"
 })
+
+SearchesSchema.loadClass(Search)
+
 
 mongoose.model('Searches_pet', SearchesSchema);
