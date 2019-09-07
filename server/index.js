@@ -6,6 +6,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
 const passport = require('passport');
+const config = require("./config")
 
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
@@ -26,8 +27,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  //Todo
-  secret: "CAMBIAR ACA",
+  secret: config.SESSION_SECRET_TOKEN,
   cookie: {
     maxAge: 60000
   },
@@ -41,7 +41,7 @@ if (!isProduction) {
 }
 
 //Configure Mongoose
-mongoose.connect('mongodb://127.0.0.1/pets', {
+mongoose.connect(config.MONGO_URL, {
   useNewUrlParser: true
 }).then(() => {
   console.log("Connect to DB success")
@@ -106,4 +106,4 @@ if (isProduction) {
 }
 
 
-app.listen(3000, () => console.log('Server running'));
+app.listen(config.PORT, () => console.log('Server running at port ' + config.PORT));
