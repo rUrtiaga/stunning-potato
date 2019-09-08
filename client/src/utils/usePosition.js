@@ -1,14 +1,19 @@
-import { useState, useEffect } from "react";
+import {
+  useState,
+  useEffect
+} from "react";
 
 // export default function usePosition() {
 export const usePosition = () => {
   const [position, setPosition] = useState({});
   const [error, setError] = useState(null);
 
-  const onChange = ({ coords }) => {
+  const onChange = ({
+    coords
+  }) => {
     setPosition({
       lat: coords.latitude,
-      long: coords.longitude
+      lng: coords.longitude
     });
   };
 

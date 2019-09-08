@@ -1,42 +1,15 @@
 import React, { Fragment } from "react";
-import HereMap from "./HereMap";
 import { here } from "../../config";
-import axios from "axios";
 import { LostPetsConsumer } from "../../utils/context/LostPets";
+import Resultados from "./Resultados";
 
-class Resultados extends React.Component {
-  render() {
-    let l = this.props.list;
-    if (l) {
-      return (
-        <Fragment>
-          {l.map(element => (
-            <button
-              onClick={() =>
-                this.props.onSelect({
-                  lat: element.Location.DisplayPosition.Latitude,
-                  lng: element.Location.DisplayPosition.Longitude
-                })
-              }
-              id={element.Location.Address.Label}
-              key={element.Location.Address.Label}
-            >
-              * {element.Location.Address.Label}
-            </button>
-          ))}
-        </Fragment>
-      );
-    } else {
-      return null;
-    }
-  }
-}
-
+// DEPRECATED
 class GeoSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "", platform: "" };
   }
+  //Busqueda del texto en servicio here
   searchGeo(text) {
     var platform = new window.H.service.Platform({
       app_id: here.id,
@@ -64,17 +37,9 @@ class GeoSearch extends React.Component {
     });
   }
 
+  //Manejo del imput
   handleChange(event) {
     this.setState({ value: event.target.value });
-  }
-
-  handleMapSelect(coord) {
-    if (this.state.map) {
-      this.state.map.setCenter(coord);
-    } else {
-      let map = HereMap(this.state.platform, coord);
-      this.setState({ selectCoord: coord, map });
-    }
   }
 
   render() {
@@ -95,14 +60,12 @@ class GeoSearch extends React.Component {
               <Resultados
                 list={this.state.list}
                 onSelect={c => {
-                  this.handleMapSelect(c);
                   setGeoLocation(c);
                 }}
               />
             );
           }}
         </LostPetsConsumer>
-        <div id="mapContainer" style={{ width: "100%", height: "400px" }} />
       </Fragment>
     );
   }
