@@ -17,15 +17,16 @@ export default function(props) {
   const geocoder = platform.getGeocodingService();
 
   const searchGeo = () => {
-    geocoder.geocode(
-      { searchText: keyboardInput },
-      r => {
-        setlistLocations(r.Response.View[0].Result);
-      },
-      e => alert(e)
-    );
+    if (keyboardInput.length > 0) {
+      geocoder.geocode({ searchText: keyboardInput }, onResponseSearch, e =>
+        alert(e)
+      );
+    }
   };
 
+  const onResponseSearch = r => {
+    setlistLocations(r.Response.View[0].Result);
+  };
   return (
     <Fragment>
       <input
