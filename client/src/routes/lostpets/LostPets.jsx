@@ -5,6 +5,7 @@ import { LostPetsProvider } from "../../utils/context/LostPets";
 import { usePosition } from "../../utils/usePosition";
 import { useToggle } from "../../utils/useToggle";
 import Map from "../../components/map";
+import Loading from "../../components/loading";
 
 function validLocation(location) {
   return location.lat && location.lng;
@@ -18,6 +19,7 @@ function LostPets() {
     console.log(error);
   }
   useEffect(() => {
+    console.log(lat, lng);
     setGeoLocation({ lat, lng });
   }, [lat, lng]);
 
@@ -32,7 +34,7 @@ function LostPets() {
       </Fragment>
     );
   }
-  return null;
+  return <Loading />;
 }
 
 export default LostPets;

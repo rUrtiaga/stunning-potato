@@ -1,0 +1,239 @@
+import React from "react";
+import clsx from "clsx";
+import { Link } from "react-router-dom";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+import Drawer from "@material-ui/core/Drawer";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import HomeIcon from "@material-ui/icons/Home";
+import PetsIcon from "@material-ui/icons/Pets";
+import List from "@material-ui/core/List";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex"
+  },
+  title: {
+    flexGrow: 1
+  },
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end"
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    marginLeft: -drawerWidth
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0
+  }
+}));
+
+export default function MenuAppBar(props) {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
+  function handleDrawerOpen() {
+    setOpenDrawer(true);
+  }
+
+  function handleDrawerClose() {
+    setOpenDrawer(false);
+  }
+
+  function handleChange(event) {
+    setAuth(event.target.checked);
+  }
+
+  function handleMenu(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
+  return (
+    // <div className={classes.root}>
+    //   <FormGroup>
+    //     <FormControlLabel
+    //       control={
+    //         <Switch
+    //           checked={auth}
+    //           onChange={handleChange}
+    //           aria-label="login switch"
+    //         />
+    //       }
+    //       label={auth ? "Logout" : "Login"}
+    //     />
+    //   </FormGroup>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: openDrawer
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            edge="start"
+            onClick={handleDrawerOpen}
+            color="inherit"
+            aria-label="menu"
+            className={clsx(classes.menuButton, openDrawer && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Mascotas
+          </Typography>
+          {auth && (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Perfil</MenuItem>
+                <MenuItem onClick={handleClose}>Mi cuenta</MenuItem>
+              </Menu>
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={openDrawer}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <ListItem
+            button
+            key="home"
+            component={props => <Link to="/" {...props} />}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Inicio" />
+          </ListItem>
+          <ListItem
+            button
+            key="lostPets"
+            component={props => <Link to="/lostPets" {...props} />}
+          >
+            <ListItemIcon>
+              <PetsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Perdidas" />
+          </ListItem>
+        </List>
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: openDrawer
+        })}
+      >
+        <div className={classes.drawerHeader} />
+        {props.children}
+      </main>
+    </div>
+  );
+}

@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useState, useEffect } from "react";
 import { LostPetsContext } from "../../utils/context/LostPets";
 import getPetsSearchsFromGeo from "./request/getPetsSerachsFromGeo";
+import MiniPet from "../../components/miniPet";
 
 export default function() {
   const { geoLocation } = useContext(LostPetsContext);
@@ -20,10 +21,10 @@ export default function() {
     return (
       <Fragment>
         {pets.map(p => (
-          <span key={p.name}>{p.name}</span>
+          <MiniPet pet={p} key={p._id} />
         ))}
       </Fragment>
     );
   }
-  return <span> no hay animales perdidos registrados</span>;
+  return <span> no hay animales perdidos registrados </span>;
 }
