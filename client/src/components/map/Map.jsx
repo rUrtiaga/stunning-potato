@@ -9,7 +9,7 @@ export default function(props) {
     return null;
   }
   return (
-    <div id="mapContainer" style={{ width: "100%", height: "400px" }}>
+    <div style={{ width: "100%", height: "400px", marginBottom: "1em" }}>
       <HEREMap
         appId={here.id}
         appCode={here.code}
@@ -20,7 +20,9 @@ export default function(props) {
           lat={geoLocation.lat}
           lng={geoLocation.lng}
           draggable
-          // onDragEnd={e => {...}}
+          onDragEnd={e => {
+            console.log("drag");
+          }}
         />
       </HEREMap>
     </div>

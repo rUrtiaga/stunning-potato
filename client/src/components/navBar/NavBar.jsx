@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -20,9 +21,9 @@ import PetsIcon from "@material-ui/icons/Pets";
 import List from "@material-ui/core/List";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
+// import Switch from "@material-ui/core/Switch";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
@@ -104,9 +105,9 @@ export default function MenuAppBar(props) {
     setOpenDrawer(false);
   }
 
-  function handleChange(event) {
-    setAuth(event.target.checked);
-  }
+  // function handleChange(event) {
+  //   setAuth(event.target.checked);
+  // }
 
   function handleMenu(event) {
     setAnchorEl(event.currentTarget);
@@ -207,7 +208,9 @@ export default function MenuAppBar(props) {
           <ListItem
             button
             key="home"
-            component={props => <Link to="/" {...props} />}
+            component={React.forwardRef((props, ref) => (
+              <Link to="/" {...props} ref={ref} />
+            ))}
           >
             <ListItemIcon>
               <HomeIcon />
@@ -217,7 +220,9 @@ export default function MenuAppBar(props) {
           <ListItem
             button
             key="lostPets"
-            component={props => <Link to="/lostPets" {...props} />}
+            component={React.forwardRef((props, ref) => (
+              <Link to="/lostPets" {...props} ref={ref} />
+            ))}
           >
             <ListItemIcon>
               <PetsIcon />

@@ -12,29 +12,29 @@ function validLocation(location) {
 }
 
 function LostPets() {
-  const { lat, lng, error } = usePosition();
+  const { lat, lng } = usePosition();
   const [geoLocation, setGeoLocation] = useState({ lat, lng });
-  const { on, toggle } = useToggle();
-  if (error) {
-    console.log(error);
-  }
+  const { on, toggle } = useToggle(true);
+
   useEffect(() => {
-    console.log(lat, lng);
     setGeoLocation({ lat, lng });
   }, [lat, lng]);
 
-  if (validLocation(geoLocation)) {
-    return (
-      <Fragment>
-        <LostPetsProvider value={{ geoLocation, setGeoLocation, toggle }}>
-          <LocationBar />
-          <Map hide={on} />
-          <PetsGrid />
-        </LostPetsProvider>
-      </Fragment>
-    );
-  }
-  return <Loading />;
+  return (
+    <Fragment>
+      <LostPetsProvider value={{ geoLocation, setGeoLocation, toggle }}>
+        <LocationBar />
+        {validLocation(geoLocation) ? (
+          <Fragment>
+            <Map hide={on} />
+            <PetsGrid />
+          </Fragment>
+        ) : (
+          <Loading />
+        )}
+      </LostPetsProvider>
+    </Fragment>
+  );
 }
 
 export default LostPets;

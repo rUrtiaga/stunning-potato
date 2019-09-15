@@ -9,22 +9,28 @@ export default function() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await getPetsSearchsFromGeo(geoLocation);
-      if (res.length >= 0) {
+      let res = await getPetsSearchsFromGeo(geoLocation);
+
+      if (res && res.length >= 0) {
         setPets(res);
       }
     }
     fetchData();
+    return;
   }, [geoLocation]);
 
-  if (pets && pets.length > 0) {
-    return (
-      <Fragment>
-        {pets.map(p => (
-          <MiniPet pet={p} key={p._id} />
-        ))}
-      </Fragment>
-    );
+  if (pets) {
+    if (pets.length > 0) {
+      return (
+        <Fragment>
+          {pets.map(p => (
+            <MiniPet pet={p} key={p._id} />
+          ))}
+        </Fragment>
+      );
+    } else {
+      return <span> no hay mascotas perdidas</span>;
+    }
   }
-  return <span> no hay animales perdidos registrados </span>;
+  return <span> Buscando </span>;
 }
