@@ -1,38 +1,33 @@
 import {
-  useState,
-  useEffect
+    useEffect
 } from "react";
-
-// export default function usePosition() {
+import {
+    useGeoPositionHTML5
+} from "./useGeoPositionHTML5"
 export const usePosition = () => {
-  const [position, setPosition] = useState({});
-  const [error, setError] = useState(null);
-
-  const onChange = ({
-    coords
-  }) => {
-    setPosition({
-      lat: coords.latitude,
-      lng: coords.longitude
-    });
-  };
-
-  const onError = error => {
-    setError(error.message);
-  };
-
-  useEffect(() => {
-    const geo = navigator.geolocation;
-    if (!geo) {
-      setError("Geolocation is not supported");
-      return;
+    const {
+        lat,
+        lng,
+        setPosition,
+        setError,
+        error
+    } = useGeoPositionHTML5();
+    useEffect(() => {
+        if (error) {
+            fetch('https://ipapi.co/json')
+                .then(res => res.json())
+                .then(location => setPosition({
+                    lat: location.latitude,
+                    lng: location.longitude
+                })).catch(e => {
+                    console.log("error getting ipapi location");
+                    setError("error getting ipapi location")
+                })
+        }
+    }, [error, setError, setPosition])
+    return {
+        lat,
+        lng,
+        error
     }
-    let watcher = geo.watchPosition(onChange, onError);
-    return () => geo.clearWatch(watcher);
-  }, []);
-
-  return {
-    ...position,
-    error
-  };
-};
+}
