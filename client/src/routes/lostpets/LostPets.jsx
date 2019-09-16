@@ -22,7 +22,9 @@ function LostPets() {
 
   return (
     <Fragment>
-      <LostPetsProvider value={{ geoLocation, setGeoLocation, toggle }}>
+      <LostPetsProvider
+        value={{ geoLocation, setGeoLocation, toggleMap: toggle }}
+      >
         <LocationBar />
         {validLocation(geoLocation) ? (
           <Fragment>

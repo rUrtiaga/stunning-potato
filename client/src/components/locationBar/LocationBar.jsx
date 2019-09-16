@@ -12,6 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import FindButton from "./FindButton";
 import { here } from "../../config";
 import Resultados from "./Resultados";
+import { useToggle } from "../../utils/useToggle";
 
 const useStyles = makeStyles(theme => ({
   button: { float: "right" },
@@ -22,16 +23,16 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center",
-    marginBottom: "1em"
+    alignItems: "center"
   }
 }));
 
 export default function(props) {
   const classes = useStyles();
+  const { on, toggle } = useToggle(false);
   const [keyboardInput, setkeyboardInput] = useState("");
   const [listLocations, setlistLocations] = useState([]);
-  const { setGeoLocation, toggle } = useContext(LostPetsContext);
+  const { setGeoLocation, toggleMap } = useContext(LostPetsContext);
   //La librería esta implementando este uso
   //   const platform = usePlatform({ app_code: here.code, app_id: here.id });
   const platform = new window.H.service.Platform({
@@ -51,6 +52,7 @@ export default function(props) {
   const onResponseSearch = r => {
     if (r.Response.View.length > 0) {
       setlistLocations(r.Response.View[0].Result);
+      toggle();
     } else {
       setlistLocations([]);
     }
@@ -65,20 +67,23 @@ export default function(props) {
             className={classes.center}
             onChange={i => setkeyboardInput(i.target.value)}
           />
-          <IconButton onClick={toggle} className={classes.button}>
+          <IconButton onClick={toggleMap} className={classes.button}>
             <MapIcon />
           </IconButton>
           <FindButton onClick={searchGeo} className={classes.button} />
         </Paper>
+        <Resultados
+          open={on}
+          setHide={toggle}
+          list={listLocations}
+          onSelect={c => {
+            setGeoLocation(c);
+          }}
+        />
       </Grid>
-      {/* <button onClick={searchGeo}>Buscar</button> */}
       {/*Desplegar resultados */}
-      <Resultados
-        list={listLocations}
-        onSelect={c => {
-          setGeoLocation(c);
-        }}
-      />
+
+      <Grid item xs={12} md={10}></Grid>
     </Grid>
   );
 }
