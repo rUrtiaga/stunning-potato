@@ -10,8 +10,11 @@ export default function(props) {
 
   function handleMenuItemClick(event, index, element) {
     props.onSelect({
-      lat: element.Location.DisplayPosition.Latitude,
-      lng: element.Location.DisplayPosition.Longitude
+      geo: {
+        lat: element.Location.DisplayPosition.Latitude,
+        lng: element.Location.DisplayPosition.Longitude
+      },
+      addressLabel: element.Location.Address.Label
     });
     props.setHide();
   }

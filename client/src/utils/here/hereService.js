@@ -26,8 +26,8 @@ const searchHereText = function (keyboardInput, onResponseSearch, error) {
 
 const searchHereGeo = function (geoLocation, onResponseSearch, error) {
     geocoder.reverseGeocode({
-            prox: geoLocation.lat + "," + geoLocation.lng,
-            mode: 'retrieveAddresses',
+            prox: `${geoLocation.lat},${geoLocation.lng},1000`,
+            mode: 'retrieveAreas',
             maxresults: '1',
             gen: '9'
         }, onResponseSearch, error ? error : e =>

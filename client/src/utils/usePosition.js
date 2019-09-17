@@ -4,6 +4,7 @@ import {
 import {
     useGeoPositionHTML5
 } from "./useGeoPositionHTML5"
+
 export const usePosition = () => {
     const {
         lat,

@@ -73,7 +73,8 @@ export default function(props) {
           setHide={toggle}
           list={listLocations}
           onSelect={c => {
-            setGeoLocation(c);
+            setGeoLocation(c.geo);
+            setkeyboardInput(c.addressLabel);
           }}
         />
       </Grid>
