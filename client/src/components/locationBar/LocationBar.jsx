@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { LostPetsContext } from "../../utils/context/LostPets";
+import { searchHereText } from "../../utils/here/hereService";
 
-// import { usePlatform } from "here-maps-react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
@@ -10,7 +10,6 @@ import MapIcon from "@material-ui/icons/Map";
 import Grid from "@material-ui/core/Grid";
 
 import FindButton from "./FindButton";
-import { here } from "../../config";
 import Resultados from "./Resultados";
 import { useToggle } from "../../utils/useToggle";
 
@@ -30,22 +29,17 @@ const useStyles = makeStyles(theme => ({
 export default function(props) {
   const classes = useStyles();
   const { on, toggle } = useToggle(false);
-  const [keyboardInput, setkeyboardInput] = useState("");
   const [listLocations, setlistLocations] = useState([]);
-  const { setGeoLocation, toggleMap } = useContext(LostPetsContext);
-  //La librería esta implementando este uso
-  //   const platform = usePlatform({ app_code: here.code, app_id: here.id });
-  const platform = new window.H.service.Platform({
-    app_id: here.id,
-    app_code: here.code
-  });
-  const geocoder = platform.getGeocodingService();
+  const {
+    setGeoLocation,
+    toggleMap,
+    keyboardInput,
+    setkeyboardInput
+  } = useContext(LostPetsContext);
 
   const searchGeo = () => {
     if (keyboardInput.length > 0) {
-      geocoder.geocode({ searchText: keyboardInput }, onResponseSearch, e =>
-        alert(e)
-      );
+      searchHereText(keyboardInput, onResponseSearch);
     }
   };
 
@@ -72,6 +66,8 @@ export default function(props) {
           </IconButton>
           <FindButton onClick={searchGeo} className={classes.button} />
         </Paper>
+
+        {/*Desplegar resultados */}
         <Resultados
           open={on}
           setHide={toggle}
@@ -81,9 +77,6 @@ export default function(props) {
           }}
         />
       </Grid>
-      {/*Desplegar resultados */}
-
-      <Grid item xs={12} md={10}></Grid>
     </Grid>
   );
 }

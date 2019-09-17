@@ -14,6 +14,7 @@ function validLocation(location) {
 function LostPets() {
   const { lat, lng } = usePosition();
   const [geoLocation, setGeoLocation] = useState({ lat, lng });
+  const [keyboardInput, setkeyboardInput] = useState("");
   const { on, toggle } = useToggle(true);
 
   useEffect(() => {
@@ -23,7 +24,13 @@ function LostPets() {
   return (
     <Fragment>
       <LostPetsProvider
-        value={{ geoLocation, setGeoLocation, toggleMap: toggle }}
+        value={{
+          geoLocation,
+          setGeoLocation,
+          toggleMap: toggle,
+          keyboardInput,
+          setkeyboardInput
+        }}
       >
         <LocationBar />
         {validLocation(geoLocation) ? (
