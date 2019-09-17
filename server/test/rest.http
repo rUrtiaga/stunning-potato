@@ -1,4 +1,10 @@
-GET http://localhost:3000/api
+@authToken = {{login.response.body.user.token}}
+@mail = "mail25@lito.com"
+
+
+
+###
+GET http://localhost:8000/api
 ?user=user& HTTP/1.1
 content-type: application/json
 
@@ -8,7 +14,7 @@ content-type: application/json
 }
 
 ### 
-POST http://localhost:3000/api/auth/register HTTP/1.1
+POST http://localhost:8000/api/auth/register HTTP/1.1
 content-type: application/json
 
 {
@@ -21,23 +27,25 @@ content-type: application/json
 }
 
 ###
-GET  http://localhost:3000/api/me HTTP/1.1
+GET  http://localhost:8000/api/me HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NzI3MjUwLCJpYXQiOjE1NTk1NDMyNTB9.871OptD0oVSwoQinBMEElbhj6Lsxp_Loic-lcYkUiEg
+Authorization: {{authToken}}
+
 ### good passwod
-POST  http://localhost:3000/api/auth/login HTTP/1.1
+# @name login
+POST  http://localhost:8000/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
     "user":
         {
-    "email":"mail25@lito.com",
+    "email":{{mail}},
     "password":"1234"
     }
 }
 
 ### Bad password
-POST  http://localhost:3000/api/auth/login HTTP/1.1
+POST  http://localhost:8000/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
@@ -47,83 +55,84 @@ content-type: application/json
 }
 
 ### FORGOT password
-POST  http://localhost:3000/api/auth/forgot HTTP/1.1
+POST  http://localhost:8000/api/auth/forgot HTTP/1.1
 content-type: application/json
 
 {
-    "email":"MAIL"
+    "email":{{mail}}
 }
 
 
 ### FORGOT password
-PUT  http://localhost:3000/api/auth/restore HTTP/1.1
+PUT  http://localhost:8000/api/auth/restore HTTP/1.1
 content-type: application/json
 
 {
-    "email":"MAIL",
+    "email":{{mail}},
     "token":"$2a$04$luAimd2kGOBIYVQiuaEbqO",
     "password":"123456"
 }
 
 
 ### Add new pet to user 5ce77a7496a2071f0b7d70a7
-POST http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
+POST http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY5MTc1NDk2LCJpYXQiOjE1NjM5OTE0OTZ9.UWYoLsimYb7QQcj0cszvbrGj9g8Dd3A7zmS6diG4Qmg
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTczOTM3MzcwLCJpYXQiOjE1Njg3NTMzNzB9.dhyxMGTh66jq9NBfTTcLDzJG3dRSe7Ss6GAAglPG79k
 
 {
     "pet":{
-         "species": "dog",
+         "species": "cat",
          "sex": "female",
-         "age": "young",
-         "name": "Gaturro"
+         "age": "old",
+         "name": "gati"
     }
 }
 
+## 5d814732c5c1630a07400cb3  5d81474cc5c1630a07400cb4   5d814754c5c1630a07400cb5
+
 ### Get pets from user 
-GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
+GET http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
 
 ### Get pet from user 
-GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327 HTTP/1.1
+GET http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327 HTTP/1.1
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
 
 ### Get search from user 
-GET http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327/search HTTP/1.1
+GET http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327/search HTTP/1.1
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
 
 
 ### Add new search to pet
-POST http://localhost:3000/api/users/5ce1b137e0137b3802648da1/pets/5ce77a7496a2071f0b7d70a7/search HTTP/1.1
+POST http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5d81474cc5c1630a07400cb4/search HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlMWIxMzdlMDEzN2IzODAyNjQ4ZGExIiwiZXhwIjoxNTYzODU3MTgyLCJpYXQiOjE1NTg2NzMxODJ9.18k-dgdISclZidbh66arwqYHxK3C_cs4boC6cRfLxPk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTczOTM3MzcwLCJpYXQiOjE1Njg3NTMzNzB9.dhyxMGTh66jq9NBfTTcLDzJG3dRSe7Ss6GAAglPG79k
 
 {
     "location":{
         "type" : "Point",
         "coordinates" : [
-            -122.5,
-            37.7
+            -35.51713,
+            -58.31567
         ]
     },
     "date": "2019-05-01T00:00:00.000Z"
 }
 
 ### Get pet search
-GET http://localhost:3000/api/pets/5d389ee63c06762de788d327/search HTTP/1.1
+GET http://localhost:8000/api/pets/5d389ee63c06762de788d327/search HTTP/1.1
 content-type: application/json
 
 ### Get pet contact
-GET http://localhost:3000/api/pets/5d389ee63c06762de788d327/contact HTTP/1.1
+GET http://localhost:8000/api/pets/5d389ee63c06762de788d327/contact HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxODcyMjQ5LCJpYXQiOjE1NjY2ODgyNDl9.Z5p3YOdFJbLfG0UjoVGN022ZIhVzYOxewjuR-nd0WXk 
+Authorization: {{authToken}}
 
-
-### Get pets arrownd me
-GET http://localhost:3000/api/lostpets HTTP/1.1
+### Get pets arrownd position
+GET http://localhost:8000/api/lostpets HTTP/1.1
     ?lat=-35.522620524394135
     &long=-58.30532461073403 
 content-type: application/json
@@ -131,14 +140,14 @@ content-type: application/json
 
 
 ### delete search from pet
-DELETE http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/search HTTP/1.1
+DELETE http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/search HTTP/1.1
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NTU1ODEyLCJpYXQiOjE1NTkzNzE4MTJ9.sDL88rumweDCM-1VkNrZ-Vktgr5OnN5xA7F4A2MfD8A
 
 
 
 ### Test image avatar
-POST  http://localhost:3000/api/me/avatar
+POST  http://localhost:8000/api/me/avatar
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -153,17 +162,16 @@ Content-Type: image/png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### Test image avatar
-get  http://localhost:3000/api/me/avatar
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
-
+get  http://localhost:8000/api/me/avatar
+Authorization: {{authToken}}
 ### Test image avatar
-DELETE   http://localhost:3000/api/me/avatar
+DELETE   http://localhost:8000/api/me/avatar
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
 
 
 
 ### Test image pets
-POST  http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics
+POST  http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY2MzQxMTI3LCJpYXQiOjE1NjExNTcxMjd9.MrOAYZBGud_GSqBqJNeCEA0kzYs_0xxIsvWJclZ3BCs
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -178,5 +186,5 @@ Content-Type: image/png
 
 
 ### remove pics pics1561313565493
-DELETE   http://localhost:3000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics/pics1561313565493
+DELETE   http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics/pics1561313565493
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
