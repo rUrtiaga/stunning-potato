@@ -1,17 +1,8 @@
 @authToken = {{login.response.body.user.token}}
+@idUserLoged = {{login.response.body.user._id}}
 @mail = "mail25@lito.com"
+@idPet = {{addNewPetToUser.response.body.$.id}}
 
-
-
-###
-GET http://localhost:8000/api
-?user=user& HTTP/1.1
-content-type: application/json
-
-{
-    "user": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
-}
 
 ### 
 POST http://localhost:8000/api/auth/register HTTP/1.1
@@ -21,7 +12,7 @@ content-type: application/json
     "user":{
         "name": "TEST",
        "last_name":"TESTT",
-     "email":"mail30@lito.com",
+     "email": {{mail}},
     "password":"1234"
     }
 }
@@ -74,42 +65,36 @@ content-type: application/json
 }
 
 
-### Add new pet to user 5ce77a7496a2071f0b7d70a7
-POST http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
+### Add new pet to user loged
+
+# @name addNewPetToUser
+POST http://localhost:8000/api/users/{{idUserLoged}}/pets HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTczOTM3MzcwLCJpYXQiOjE1Njg3NTMzNzB9.dhyxMGTh66jq9NBfTTcLDzJG3dRSe7Ss6GAAglPG79k
+Authorization: {{authToken}}
 
 {
     "pet":{
          "species": "cat",
          "sex": "female",
          "age": "old",
-         "name": "gati"
+         "name": "LAME"
     }
 }
 
-## 5d814732c5c1630a07400cb3  5d81474cc5c1630a07400cb4   5d814754c5c1630a07400cb5
-
 ### Get pets from user 
-GET http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets HTTP/1.1
+GET http://localhost:8000/api/users/{{idUserLoged}}/pets HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
+Authorization: {{authToken}}
 
 ### Get pet from user 
-GET http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327 HTTP/1.1
+GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}} HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
-
-### Get search from user 
-GET http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5d389ee63c06762de788d327/search HTTP/1.1
-content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTcxNTIwMjk3LCJpYXQiOjE1NjYzMzYyOTd9.8hTSy9SV4wxR3_VO9pJYBvEZCAl7chRJG6Q9JlVBZrQ
-
+Authorization: {{authToken}}
 
 ### Add new search to pet
-POST http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5d81474cc5c1630a07400cb4/search HTTP/1.1
+POST http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/search HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTczOTM3MzcwLCJpYXQiOjE1Njg3NTMzNzB9.dhyxMGTh66jq9NBfTTcLDzJG3dRSe7Ss6GAAglPG79k
+Authorization: {{authToken}}
 
 {
     "location":{
@@ -122,12 +107,18 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRv
     "date": "2019-05-01T00:00:00.000Z"
 }
 
+### Get search from user 
+GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/search HTTP/1.1
+content-type: application/json
+Authorization: {{authToken}}
+
+
 ### Get pet search
-GET http://localhost:8000/api/pets/5d389ee63c06762de788d327/search HTTP/1.1
+GET http://localhost:8000/api/pets/{{idPet}}/search HTTP/1.1
 content-type: application/json
 
 ### Get pet contact
-GET http://localhost:8000/api/pets/5d389ee63c06762de788d327/contact HTTP/1.1
+GET http://localhost:8000/api/pets/{{idPet}}/contact HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
@@ -138,18 +129,17 @@ GET http://localhost:8000/api/lostpets HTTP/1.1
 content-type: application/json
 
 
-
 ### delete search from pet
-DELETE http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/search HTTP/1.1
+DELETE http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/search HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY0NTU1ODEyLCJpYXQiOjE1NTkzNzE4MTJ9.sDL88rumweDCM-1VkNrZ-Vktgr5OnN5xA7F4A2MfD8A
+Authorization: {{authToken}}
 
 
 
-### Test image avatar
+### Test image avatar UPLOAD user avatar 
 POST  http://localhost:8000/api/me/avatar
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
+Authorization: {{authToken}}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
@@ -161,19 +151,19 @@ Content-Type: image/png
 < ./1.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### Test image avatar
+### Test image avatar OBTAIN user avatar
 get  http://localhost:8000/api/me/avatar
 Authorization: {{authToken}}
-### Test image avatar
+### Test image avatar REMOVE user avatar
 DELETE   http://localhost:8000/api/me/avatar
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
+Authorization: {{authToken}}
 
 
 
-### Test image pets
-POST  http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics
+### Test image pets UPLOAD pet principal image
+POST  http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/pics
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY2MzQxMTI3LCJpYXQiOjE1NjExNTcxMjd9.MrOAYZBGud_GSqBqJNeCEA0kzYs_0xxIsvWJclZ3BCs
+Authorization: {{authToken}}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
@@ -182,9 +172,10 @@ principal
 Content-Disposition: form-data; name="principal"; filename="1.png"
 Content-Type: image/png
 
+< ./1.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
 ### remove pics pics1561313565493
-DELETE   http://localhost:8000/api/users/5ceef6777db3b53389836a81/pets/5cf5617c5d66df4434c91de2/pics/pics1561313565493
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWwyNUBsaXRvLmNvbSIsImlkIjoiNWNlZWY2Nzc3ZGIzYjUzMzg5ODM2YTgxIiwiZXhwIjoxNTY1MjAyODU3LCJpYXQiOjE1NjAwMTg4NTd9.tI-6h_xGFhS-NxFeRCSc1HH1_g0xNmnvKvuPkqJXVbc
+DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/pics/pics1561313565493
+Authorization: {{authToken}}

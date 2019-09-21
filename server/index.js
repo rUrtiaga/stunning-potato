@@ -41,17 +41,51 @@ if (!isProduction) {
 }
 
 //Configure Mongoose
-mongoose.connect(config.MONGO_URL, {
-  useNewUrlParser: true
-}).then(() => {
-  console.log("Connect to DB success")
-}).catch(e => {
+const db = mongoose.connection;
+const options = {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0,
+  connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
+  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+}
+
+//Actions to show status for mongoDB server connection
+db.on('connecting', function () {
+  console.log('connecting to MongoDB...');
+});
+db.on('error', function (error) {
+  console.error('Error in MongoDb connection: ' + error);
+  mongoose.disconnect();
+});
+db.on('connected', function () {
+  console.log('MongoDB connected!');
+});
+db.once('open', function () {
+  console.log('MongoDB connection opened!');
+});
+db.on('reconnected', function () {
+  console.log('MongoDB reconnected!');
+});
+//When status of dbConnection is disconnected, try to reconnect every some time
+db.on('disconnected', () => {
+  console.log('MongoDB disconnected!');
+  setTimeout(function () {
+    console.log('MongoDB disconnected!');
+    mongoose.connect(config.MONGO_URL, options);
+  }, 5000);
+});
+//Moongoose db set debugger only if production mode is disabled
+mongoose.set('debug', isProduction);
+//First try to connect to mongoDB server
+mongoose.connect(config.MONGO_URL, options).catch(e => {
   console.log("DB connect ERROR", e)
 });
-mongoose.set('debug', isProduction);
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
 
 //Models and routes
 require('./models/Search');
