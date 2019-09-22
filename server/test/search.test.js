@@ -1,12 +1,6 @@
-const axios_lib = require("axios");
 const aux = require("./axios_functions")
-
+const axios = require("./axiosConnection")
 var user_loged;
-
-const axios = axios_lib.create({
-    baseURL: "http://localhost:3000/api/",
-    timeout: 1000
-})
 
 describe("Search", () => {
 

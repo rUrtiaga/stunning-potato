@@ -1,6 +1,6 @@
-const axios_lib = require("axios");
 const fs = require("fs");
 const FormData = require("form-data");
+const axios = require("./axiosConnection")
 
 //Ejecutar estos test en una base de datos que tenga un usuario
 let user_loged;
@@ -8,14 +8,9 @@ let pet = {
     species: "dog",
     sex: "female",
     age: "young",
-    name: "Chipolin"
+    name: "TESTUUU"
 }
 let pet_id;
-
-const axios = axios_lib.create({
-    baseURL: "http://localhost:3000/api/",
-    timeout: 1000
-})
 
 
 async function obtainPetsFromId(id) {

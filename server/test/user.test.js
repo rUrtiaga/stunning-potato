@@ -1,14 +1,9 @@
-const axios_lib = require("axios");
+const axios = require("./axiosConnection")
 const fs = require("fs");
 const FormData = require("form-data");
 
 //Ejecutar estos test en una base de datos con un usuario (auth.test.js crea uno)
 let user_loged;
-
-const axios = axios_lib.create({
-  baseURL: "http://localhost:3000/api/",
-  timeout: 1000
-});
 
 describe("Users", () => {
   beforeAll(async () => {

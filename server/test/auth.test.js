@@ -1,12 +1,6 @@
-const axios_lib = require("axios");
-
+const axios = require("./axiosConnection")
 //Ejecutar estos test en una base de datos vacia
 let user_loged;
-
-const axios = axios_lib.create({
-    baseURL: "http://localhost:3000/api/",
-    timeout: 1000
-})
 
 describe("Auth", () => {
 

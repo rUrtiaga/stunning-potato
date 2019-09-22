@@ -1,6 +1,7 @@
 module.exports = {
   SESSION_SECRET_TOKEN: process.env.SESSION_SECRET_TOKEN || "some",
   MONGO_URL: process.env.MONGO_URL || 'mongodb://127.0.0.1/pets',
+  SERVER_URL: process.env.SERVER_URL || 'http://localhost',
   PORT: process.env.PORT || 8000,
   JWT_TOKEN: process.env.JWT_TOKEN || "TOKEN",
   sendingBlue: {
