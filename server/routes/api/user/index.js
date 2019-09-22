@@ -4,7 +4,11 @@ var multer = require('multer')
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        dir = `./uploads/${req.userId}/${req.params.id_pet}`
+        dir = `./uploads/${req.userId}`
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+        dir = `${dir}/${req.params.id_pet}`
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
         }
