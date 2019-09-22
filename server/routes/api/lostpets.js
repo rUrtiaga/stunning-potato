@@ -24,16 +24,20 @@ module.exports = function (req, res, next) {
                     distanceField: "distance",
                     distanceMultiplier: 0.001
                 }
-
+            },
+            {
+                $project: {
+                    distance: {
+                        $round: ["$distance", 0]
+                    }
+                }
             },
             {
                 $project: {
                     name: 1,
                     age: 1,
                     species: 1,
-                    location: {
-                        coordinates: 1
-                    },
+                    pet: 1,
                     date: 1,
                     distance: 1
                 }

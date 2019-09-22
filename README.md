@@ -8,8 +8,8 @@ aplicación para encontrar mascotas perdidas
 
 Para levantar el entorno de desarrollo debemos contar con:
 
-- MongoDB en nuestra maquina corriendo en el puerto por defecto (27017)
-- NodeJS 10.X.X
+- MongoDB (ver. 4.2.X) en nuestra maquina corriendo en el puerto por defecto (27017)
+- NodeJS (ver. 10.X.X)
 
 Clonamos el repositorio.
 
