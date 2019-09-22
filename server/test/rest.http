@@ -124,8 +124,8 @@ Authorization: {{authToken}}
 
 ### Get pets arrownd position
 GET http://localhost:8000/api/lostpets HTTP/1.1
-    ?lat=-35.522620524394135
-    &long=-58.30532461073403 
+    ?lat=-35.515725
+    &long=-58.325872
 content-type: application/json
 
 
