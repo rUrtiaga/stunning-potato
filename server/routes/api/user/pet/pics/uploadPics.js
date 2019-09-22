@@ -27,7 +27,7 @@ module.exports = function (req, res, next) {
             pet.setPics(pics_filenames)
         }
         user.save()
-        return user
+        return "OK"
     }).then(r => {
         res.status(201).send(r);
     }).catch(e => {
