@@ -1,7 +1,9 @@
-import React, { Fragment, useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { LostPetsContext } from "../../utils/context/LostPets";
 import getPetsSearchsFromGeo from "./request/getPetsSerachsFromGeo";
-import MiniPet from "../../components/miniPet";
+import SearchCard from "../../components/searchCard";
+
+import Grid from "@material-ui/core/Grid";
 
 export default function() {
   const { geoLocation } = useContext(LostPetsContext);
@@ -22,11 +24,17 @@ export default function() {
   if (pets) {
     if (pets.length > 0) {
       return (
-        <Fragment>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+          spacing={3}
+        >
           {pets.map(p => (
-            <MiniPet pet={p} key={p._id} />
+            <SearchCard pet={p} key={p._id} />
           ))}
-        </Fragment>
+        </Grid>
       );
     } else {
       return <span> no hay mascotas perdidas</span>;

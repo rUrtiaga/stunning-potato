@@ -37,6 +37,35 @@ var SearchesSchema = new Schema({
 
 class Search {
 
+    //recibe un objeto location con lat y long
+    static obtainListOfSearchNearAtLocation(location) {
+        return this.aggregate([{
+                $geoNear: {
+                    near: {
+                        type: 'Point',
+                        coordinates: [parseFloat(location.lat), parseFloat(location.long)]
+                    },
+                    spherical: true,
+                    maxDistance: 5000,
+                    distanceField: "distance",
+                    distanceMultiplier: 0.001
+                }
+            },
+            {
+                $project: {
+                    name: 1,
+                    age: 1,
+                    species: 1,
+                    pet: 1,
+                    date: 1,
+                    distance: {
+                        $round: ["$distance", 0]
+                    }
+                }
+            }
+        ])
+    }
+
     static findByIdPet(id) {
         return this.findOne({
             pet: id

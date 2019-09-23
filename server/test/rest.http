@@ -2,7 +2,9 @@
 @idUserLoged = {{login.response.body.user._id}}
 @mail = "mail25@lito.com"
 @idPet = {{addNewPetToUser.response.body.$.id}}
-
+@hostName = localhost
+@port = 8000
+@host = {{hostName}}:{{port}}/api
 
 ### 
 POST http://localhost:8000/api/auth/register HTTP/1.1
@@ -77,7 +79,7 @@ Authorization: {{authToken}}
          "species": "cat",
          "sex": "female",
          "age": "old",
-         "name": "LAME"
+         "name": "Malto"
     }
 }
 
@@ -179,3 +181,6 @@ Content-Type: image/png
 ### remove pics pics1561313565493
 DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/pics/pics1561313565493
 Authorization: {{authToken}}
+
+###
+GET http://{{host}}/pets/{{idPet}}/principalPic

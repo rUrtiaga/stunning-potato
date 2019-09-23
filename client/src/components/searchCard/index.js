@@ -1,4 +1,4 @@
 export {
     default
 }
-from "./MiniPet";
+from "./SearchCard"
