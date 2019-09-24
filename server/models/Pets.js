@@ -33,6 +33,10 @@ class Pet {
         return this.picsDir() + pic_name
     }
 
+    principalPicDir() {
+        return this.getDirPic(this.principalPic)
+    }
+
     async deleteSearch(user) {
         try {
             await Searchs.findByIdAndDelete(this.search);
@@ -44,11 +48,16 @@ class Pet {
             await user.save()
         }
     }
+
     setPrincipalPic(fileName) {
         if (this.principalPic) {
             this.deleteImagePet(this.principalPic)
         }
         this.principalPic = fileName;
+        //Si posee un search actualizo la fotografia
+        if (this.search) {
+            Searchs.updatePrincipalPic(this.search, this.principalPicDir())
+        }
     }
 
     getAllPics() {

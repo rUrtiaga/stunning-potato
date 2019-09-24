@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const {
+    SERVER_URL,
+    PORT
+} = require('../config');
 
 const {
     Schema
@@ -30,12 +34,36 @@ var SearchesSchema = new Schema({
         required: true,
         min: '2019-03-20'
     },
-    pics: [String]
+    pics: [String],
+    principalPicLocation: String
 }, {
     timestamps: true
 })
 
 class Search {
+
+    static updatePrincipalPic(id_search, dir) {
+        this.findById(id_search).then(search => {
+            search.principalPicLocation = dir
+            return search.save()
+        }).catch(e => {
+            throw "No se pudo actualzar la direccion de la foto principal en search"
+        })
+    }
+
+    static obtainPrincipalPicDir(id_search) {
+        return this.findById(id_search).then(search => {
+            if (!search) {
+                throw Error("search not found")
+            }
+            if (!search.principalPicLocation) {
+                throw Error("no image in this search")
+            }
+            return search.principalPicLocation
+        }).catch(e => {
+            throw Error("error encontrando el search")
+        })
+    }
 
     //recibe un objeto location con lat y long
     static obtainListOfSearchNearAtLocation(location) {
@@ -52,14 +80,43 @@ class Search {
                 }
             },
             {
+                "$addFields": {
+                    pic: {
+                        "$cond": {
+                            if: "$principalPicLocation",
+                            then: true,
+                            else: false
+                        }
+                    }
+                }
+            },
+            {
                 $project: {
                     name: 1,
                     age: 1,
                     species: 1,
                     pet: 1,
+                    pic: 1,
                     date: 1,
                     distance: {
                         $round: ["$distance", 0]
+                    }
+                }
+            },
+            {
+                "$addFields": {
+                    picLink: {
+                        "$cond": {
+                            if: "$pic",
+                            then: {
+                                $concat: [SERVER_URL, ":", {
+                                    $toString: PORT
+                                }, "/api/searchs/", {
+                                    $toString: "$_id"
+                                }, "/pic"]
+                            },
+                            else: ""
+                        }
                     }
                 }
             }
