@@ -8,13 +8,15 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import logo from "../../assets/images/search-logo.png";
 
 const useStyles = makeStyles({
   card: {
     maxWidth: 300
   },
   media: {
-    height: 140
+    height: 0,
+    paddingTop: "56.25%" // 16:9
   }
 });
 
@@ -22,19 +24,15 @@ export default function SearchCard(props) {
   const classes = useStyles();
   const pet = props.pet;
 
-  useEffect(() => {
-    console.log(pet);
-  }, [pet]);
-
   return (
     <Grid item>
       <Card className={classes.card}>
         <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            // image={imagepath}
-            // title=""
-          />
+          {pet.pic ? (
+            <CardMedia className={classes.media} image={pet.picLink} />
+          ) : (
+            <CardMedia className={classes.media} image={logo} />
+          )}
           <CardContent>
             <Typography gutterBottom align="center" variant="h5" component="h2">
               {pet.name}
