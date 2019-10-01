@@ -1,7 +1,7 @@
 @authToken = {{login.response.body.user.token}}
 @idUserLoged = {{login.response.body.user._id}}
 @mail = "mail25@lito.com"
-@idPet = {{addNewPetToUser.response.body.$.id}}
+@idPet = {{addNewPetToUser.response.body.$.id}} ||{{addNewPetToUser.response.body.$.id}}
 @hostName = localhost
 @port = 8000
 @host = {{hostName}}:{{port}}/api
@@ -79,7 +79,7 @@ Authorization: {{authToken}}
          "species": "cat",
          "sex": "female",
          "age": "old",
-         "name": "Malto"
+         "name": "Cachito"
     }
 }
 
@@ -137,7 +137,6 @@ content-type: application/json
 Authorization: {{authToken}}
 
 
-
 ### Test image avatar UPLOAD user avatar 
 POST  http://localhost:8000/api/me/avatar
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -179,8 +178,20 @@ Content-Type: image/png
 
 
 ### remove pics pics1561313565493
-DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/pics/pics1561313565493
+DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497ad9d/pics/principal1569179059043
+Authorization: {{authToken}}
+
+
+### remove pet 
+DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d8fc3ff00964213e458e78e
+Authorization: {{authToken}}
+
+###
+get   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497ad9d/pics/principal1569179059043
 Authorization: {{authToken}}
 
 ###
 GET http://{{host}}/pets/{{idPet}}/principalPic
+
+### 
+get http://{{host}}/searchs/5d89488ebffed6294249ebb9/pic

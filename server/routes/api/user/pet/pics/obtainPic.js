@@ -1,15 +1,12 @@
-const Users = require('mongoose').model('Users')
-const Pets = require('mongoose').model('Pets')
-const fs = require('fs')
+const Users = require("mongoose").model("Users")
 
-module.exports = function (req, res, next) {
-    const id = req.userId;
+module.exports = async function(req, res, next) {
+    const id = req.userId
     const id_pet = req.params.id_pet
     const id_pic = req.params.id_pic
 
-    Users.findById(id).then(async user => {
-        res.sendFile(user.pets.id(id_pet).getDirPic(id_pic), {
-            root: '.'
-        })
+    //envia el archivo que obtiene la path mediante el user
+    res.sendFile(await Users.obtainFilePath(id, id_pet, id_pic), {
+        root: "."
     })
 }
