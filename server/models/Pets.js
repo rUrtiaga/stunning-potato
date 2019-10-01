@@ -96,7 +96,9 @@ class Pet {
 
     deleteImagePet(fileName) {
         let dir = this.picsDir()
+        //Borro el archivo
         fs.unlinkSync(dir + fileName)
+        //Si esta la carpeta vacia la borro
         if (fs.readdirSync(dir) == 0) {
             fs.rmdirSync(dir)
         }
@@ -147,20 +149,31 @@ class Pet {
 
     //Borra todas las imagenes guardadas
     deleteAllImages() {
-        deleteImagesPet(this.pics.concat(this.principalPic))
+        this.deleteImagesPet(this.pics.concat([this.principalPic]))
+    }
+
+    preRemove() {
+        try {
+            this.deleteAllImages()
+        } catch (error) {
+            console.log("error borrando imagenes", error)
+        }
+        Searchs.removeWithId(this.search)
     }
 }
 
 PetsSchema.loadClass(Pet)
 
-//Agrega una función middleware antes de remover una mascota
-PetsSchema.pre("remove", function(next) {
-    //remuevo las imagenes
-    this.deleteAllImages()
-    //remuevo la busqueda
-    Searchs.remove({ _id: this.search }).exec()
-    next()
-})
+// //Agrega una función middleware antes de remover una mascota
+//  //NO FUNCIONA si es un subdocument.
+// PetsSchema.pre("remove", function(next) {
+//     //remuevo las imagenes
+//     console.log("****** antes de borrar")
+//     this.deleteAllImages()
+//     //remuevo la busqueda
+//     Searchs.remove({ _id: this.search }).exec()
+//     next()
+// })
 
 mongoose.model("Pets", PetsSchema)
 module.exports = PetsSchema

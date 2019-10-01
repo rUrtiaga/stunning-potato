@@ -37,6 +37,10 @@ var SearchesSchema = new Schema(
 )
 
 class Search {
+    static removeWithId(id_search) {
+        this.deleteOne({ _id: id_search }).exec()
+    }
+
     static updatePrincipalPic(id_search, dir) {
         this.findById(id_search)
             .then(search => {
