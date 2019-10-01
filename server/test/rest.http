@@ -1,7 +1,8 @@
 @authToken = {{login.response.body.user.token}}
 @idUserLoged = {{login.response.body.user._id}}
 @mail = "mail25@lito.com"
-@idPet = {{addNewPetToUser.response.body.$.id}} ||{{addNewPetToUser.response.body.$.id}}
+@idNewPet = {{addNewPetToUser.response.body.$.id}}
+@idFirstPetUser = {{logedPets.response.body.$[0]._id}}
 @hostName = localhost
 @port = 8000
 @host = {{hostName}}:{{port}}/api
@@ -84,17 +85,19 @@ Authorization: {{authToken}}
 }
 
 ### Get pets from user 
+## ademas agrega a la variable idFirstPetUser la primer mascota, par utilizar en otra funciones
+# @name logedPets
 GET http://localhost:8000/api/users/{{idUserLoged}}/pets HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
 ### Get pet from user 
-GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}} HTTP/1.1
+GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idFirstPetUser}} HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
 ### Add new search to pet
-POST http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/search HTTP/1.1
+POST http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
@@ -109,18 +112,18 @@ Authorization: {{authToken}}
     "date": "2019-05-01T00:00:00.000Z"
 }
 
-### Get search from user 
-GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/search HTTP/1.1
+### Get search id from user 
+GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
 
 ### Get pet search
-GET http://localhost:8000/api/pets/{{idPet}}/search HTTP/1.1
+GET http://localhost:8000/api/pets/{{idFirstPetUser}}/search HTTP/1.1
 content-type: application/json
 
 ### Get pet contact
-GET http://localhost:8000/api/pets/{{idPet}}/contact HTTP/1.1
+GET http://localhost:8000/api/pets/{{idNewPet}}/contact HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
@@ -132,7 +135,7 @@ content-type: application/json
 
 
 ### delete search from pet
-DELETE http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/search HTTP/1.1
+DELETE http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
@@ -162,12 +165,13 @@ Authorization: {{authToken}}
 
 
 ### Test image pets UPLOAD pet principal image
-POST  http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idPet}}/pics
+POST  http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idFirstPetUser}}/pics
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 Authorization: {{authToken}}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
+principal
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="principal"; filename="1.png"
 Content-Type: image/png
@@ -192,7 +196,7 @@ Authorization: {{authToken}}
 
 
 ### remove pet 
-DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d8fc3ff00964213e458e78e
+DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idFirstPetUser}}
 Authorization: {{authToken}}
 
 ###
@@ -200,7 +204,7 @@ get   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497a
 Authorization: {{authToken}}
 
 ###
-GET http://{{host}}/pets/{{idPet}}/principalPic
+GET http://{{host}}/pets/{{idNewPet}}/principalPic
 
 ### 
 get http://{{host}}/searchs/5d89488ebffed6294249ebb9/pic
