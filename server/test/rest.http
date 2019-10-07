@@ -91,6 +91,12 @@ GET http://localhost:8000/api/users/{{idUserLoged}}/pets HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
+### 5d98ecf45a0e3c21667996d3
+GET http://localhost:8000/api/pets/5d98ecf45a0e3c21667996d3 HTTP/1.1
+content-type: application/json
+Authorization: {{authToken}}
+
+
 ### Get pet from user 
 GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idFirstPetUser}} HTTP/1.1
 content-type: application/json

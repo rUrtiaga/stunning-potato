@@ -1,11 +1,12 @@
 const mongoose = require("mongoose")
+const { Schema } = mongoose
 var bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 var { jwt_token } = require("../jwt_token")
 var jwt_key = jwt_token()
 
-const { Schema } = mongoose
-const PetsSchema = require("./Pets")
+const Pet = require("./Pets")
+const PetsSchema = mongoose.model("Pets").schema
 
 var UsersSchema = new Schema(
     {
@@ -38,6 +39,21 @@ class Person {
         return this.findById(id).then(async user => {
             return user.pets.id(id_pet).getDirPic(id_pic)
         })
+    }
+
+    static async findPetByIdPet(id) {
+        let user
+        let pet
+        try {
+            user = await this.findOne({
+                "pets._id": id
+            })
+            pet = user.pets.id(id)
+        } catch (error) {
+            console.log(error)
+            throw "unable to find this pet"
+        }
+        return pet.toClient()
     }
 
     //Authentification

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+// const Users = mongoose.model("Users")
 const Searchs = mongoose.model("Searches_pet")
 const fs = require("fs")
 const { Schema } = mongoose
@@ -26,24 +27,31 @@ class Pet {
     /**
      * Metodos de clase
      */
+    //ESTO NO VA A ANDAR.
     //obtiene el path de la foto principal dado el id de una mascota
-    static async getPrincipalPicLocation(id) {
-        let user
-        let pet
-        try {
-            user = await Users.findOne({
-                "pets._id": id
-            })
-            pet = user.pets.id(id)
-        } catch (error) {
-            throw "unable to find this pet"
-        }
-        return pet.principalPicDir()
-    }
+    // static async getPrincipalPicLocation(id) {
+    //     let user
+    //     let pet
+    //     try {
+    //         user = await Users.findOne({
+    //             "pets._id": id
+    //         })
+    //         pet = user.pets.id(id)
+    //     } catch (error) {
+    //         throw "unable to find this pet"
+    //     }
+    //     return pet.principalPicDir()
+    // }
 
     /**
      * Metodos de instancia
      */
+
+    //devuelve la mascota para visualizar del lado del cliente
+    toClient() {
+        //TODO
+        return this
+    }
 
     //estructura de carpetas donde se encuentran los diferentes archivos de la mascota actual
     picsDir() {
