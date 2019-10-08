@@ -64,12 +64,6 @@ class Pet {
 
     //obtiene el path de un determinado archivo, si no esta lanza un error
     getDirPic(pic_name) {
-        if (
-            !this.principalPic == pic_name ||
-            this.pics.some(pn => pn == pic_name)
-        ) {
-            throw "pic name not found for this pet"
-        }
         return this.picsDir() + pic_name
     }
 

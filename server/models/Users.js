@@ -49,7 +49,8 @@ class Person {
                 return user.pets.id(id_pet).getDirPic(namePic)
             })
             .catch(e => {
-                e.msj = `error encontrando el path de la pic`
+                // e.msj = `error encontrando el path de la pic`
+                console.log(e)
                 return e
             })
     }

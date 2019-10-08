@@ -8,7 +8,7 @@ import defaultImage from "../../assets/images/search/search-logo-big.png"
 function deployImages(images) {
     return images.map(i => {
         return (
-            <div>
+            <div key={i}>
                 <img src={i} alt="" />
             </div>
         )
@@ -20,7 +20,7 @@ export default function ImageViewer(props) {
     return (
         <Card>
             <Carousel>
-                {props.images ? (
+                {props.pics ? (
                     deployImages(props.pics)
                 ) : (
                     <div>
