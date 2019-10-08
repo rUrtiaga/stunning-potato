@@ -35,6 +35,25 @@ var UsersSchema = new Schema(
 )
 
 class Person {
+    static findByPetId(id_pet) {
+        return this.findOne({
+            "pets._id": id_pet
+        })
+    }
+
+    static obtainFilePathFromIdPet(id_pet, namePic) {
+        return this.findOne({
+            "pets._id": id_pet
+        })
+            .then(async user => {
+                return user.pets.id(id_pet).getDirPic(namePic)
+            })
+            .catch(e => {
+                e.msj = `error encontrando el path de la pic`
+                return e
+            })
+    }
+
     static obtainFilePath(id, id_pet, id_pic) {
         return this.findById(id).then(async user => {
             return user.pets.id(id_pet).getDirPic(id_pic)

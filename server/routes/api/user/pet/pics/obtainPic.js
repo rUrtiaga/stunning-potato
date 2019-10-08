@@ -1,5 +1,6 @@
 const Users = require("mongoose").model("Users")
 
+//deprecated?
 module.exports = async function(req, res, next) {
     const id = req.userId
     const id_pet = req.params.id_pet

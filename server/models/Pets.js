@@ -1,14 +1,15 @@
 const mongoose = require("mongoose")
-// const Users = mongoose.model("Users")
 const Searchs = mongoose.model("Searches_pet")
 const fs = require("fs")
 const { Schema } = mongoose
+const { SERVER_URL, PORT } = require("../config")
 
 let PetsSchema = new Schema(
     {
         name: String,
         species: String,
         age: String,
+        description: String,
         search: {
             type: Schema.Types.ObjectId,
             ref: "Search_pet"
@@ -23,34 +24,37 @@ let PetsSchema = new Schema(
     }
 )
 
-class Pet {
-    /**
-     * Metodos de clase
-     */
-    //ESTO NO VA A ANDAR.
-    //obtiene el path de la foto principal dado el id de una mascota
-    // static async getPrincipalPicLocation(id) {
-    //     let user
-    //     let pet
-    //     try {
-    //         user = await Users.findOne({
-    //             "pets._id": id
-    //         })
-    //         pet = user.pets.id(id)
-    //     } catch (error) {
-    //         throw "unable to find this pet"
-    //     }
-    //     return pet.principalPicDir()
-    // }
+//Genera la url en donde esta desplegado actualmente el servidor con referencia a la foto por el id de mascota y su nombre
+function UrlPetPicGenerator(id_pet, pic_name) {
+    return `${SERVER_URL}:${PORT}/api/pets/${id_pet}/pics/${pic_name}`
+}
 
+class Pet {
     /**
      * Metodos de instancia
      */
 
     //devuelve la mascota para visualizar del lado del cliente
     toClient() {
-        //TODO
-        return this
+        return {
+            name: this.name,
+            description: this.description,
+            species: this.species,
+            age: this.age,
+            pics: this.generateUrlPics()
+        }
+    }
+
+    //retorna una lista con urls a las fotos de la mascota actual, la 0 es la principal
+    generateUrlPics() {
+        let res = []
+        if (this.principalPic) {
+            res.push(UrlPetPicGenerator(this._id, this.principalPic))
+        }
+        this.pics.forEach(pic_name => {
+            res.push(UrlPetPicGenerator(this._id, pic_name))
+        })
+        return res
     }
 
     //estructura de carpetas donde se encuentran los diferentes archivos de la mascota actual
