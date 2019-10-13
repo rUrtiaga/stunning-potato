@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const { Schema } = mongoose
-const { SERVER_URL, PORT } = require("../config")
+const { SERVER_URL, PORT } = require("../../config")
 
 const pointSchema = new Schema({
     type: {

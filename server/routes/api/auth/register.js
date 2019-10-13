@@ -34,27 +34,4 @@ module.exports = async function(req, res) {
     Users.newUser(user)
         .then(auth => res.status(201).json(auth))
         .catch(e => next(e))
-    // const finalUser = new Users(user);
-    // Users.create(user)
-    //     .then(newUser => {
-    //         newUser.setPassword(user.password);
-    //         newUser.save();
-    //         return newUser;
-    //     })
-    //     .then(newUser => {
-    //         res.status(201).json({
-    //             user: newUser.toAuthJSON()
-    //         });
-    //     })
-    //     .catch(err => {
-    //         if (err.code == 11000) {
-    //             res.status(422).json({
-    //                 errors: {
-    //                     message: "duplicated key for user",
-    //                     error: {}
-    //                 }
-    //             });
-    //         }
-    //         next(err)
-    //     });
 }

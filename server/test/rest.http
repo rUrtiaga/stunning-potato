@@ -5,10 +5,12 @@
 @idFirstPetUser = {{logedPets.response.body.$[0]._id}}
 @hostName = localhost
 @port = 8000
-@host = {{hostName}}:{{port}}/api
+@host = http://{{hostName}}:{{port}}/api
 
-### 
-POST http://localhost:8000/api/auth/register HTTP/1.1
+#AUTHENTIFICATION
+
+### Register new user
+POST {{host}}/auth/register HTTP/1.1
 content-type: application/json
 
 {
@@ -20,14 +22,9 @@ content-type: application/json
     }
 }
 
-###
-GET  http://localhost:8000/api/me HTTP/1.1
-content-type: application/json
-Authorization: {{authToken}}
-
-### good passwod
+### Log in user
 # @name login
-POST  http://localhost:8000/api/auth/login HTTP/1.1
+POST  {{host}}/auth/login HTTP/1.1
 content-type: application/json
 
 {
@@ -38,18 +35,26 @@ content-type: application/json
     }
 }
 
-### Bad password
-POST  http://localhost:8000/api/auth/login HTTP/1.1
+# USER ACTIONS
+
+### Info about loged user
+GET  {{host}}/me HTTP/1.1
 content-type: application/json
+Authorization: {{authToken}}
 
-{
-"user":{    
-    "email":"mail3@lito.com",
-    "password":"12345"}
-}
 
-### FORGOT password
-POST  http://localhost:8000/api/auth/forgot HTTP/1.1
+# ### Bad password
+# POST  {{host}}/auth/login HTTP/1.1
+# content-type: application/json
+
+# {
+# "user":{    
+#     "email":"mail3@lito.com",
+#     "password":"12345"}
+# }
+
+### FORGOT password obtain token
+POST  {{host}}/auth/forgot HTTP/1.1
 content-type: application/json
 
 {
@@ -57,8 +62,8 @@ content-type: application/json
 }
 
 
-### FORGOT password
-PUT  http://localhost:8000/api/auth/restore HTTP/1.1
+### FORGOT password restore
+PUT  {{host}}/auth/restore HTTP/1.1
 content-type: application/json
 
 {
@@ -67,11 +72,36 @@ content-type: application/json
     "password":"123456"
 }
 
+### Test image avatar UPLOAD user avatar 
+POST  {{host}}/me/avatar
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: {{authToken}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+avatar
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="1.png"
+Content-Type: image/png
+
+< ./1.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Test image avatar OBTAIN user avatar for profile and nav
+get  {{host}}/me/avatar
+Authorization: {{authToken}}
+
+### Test image avatar REMOVE user avatar
+DELETE   {{host}}/me/avatar
+Authorization: {{authToken}}
+
+
+#PET ACTIONS USER
 
 ### Add new pet to user loged
 
 # @name addNewPetToUser
-POST http://localhost:8000/api/users/{{idUserLoged}}/pets HTTP/1.1
+POST {{host}}/users/{{idUserLoged}}/pets HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
@@ -87,23 +117,18 @@ Authorization: {{authToken}}
 ### Get pets from user 
 ## ademas agrega a la variable idFirstPetUser la primer mascota, par utilizar en otra funciones
 # @name logedPets
-GET http://localhost:8000/api/users/{{idUserLoged}}/pets HTTP/1.1
-content-type: application/json
-Authorization: {{authToken}}
-
-### Get Pet for pet screen
-GET http://localhost:8000/api/pets/{{idFirstPetUser}} HTTP/1.1
+GET {{host}}/users/{{idUserLoged}}/pets HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
 
 ### Get pet from user 
-GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idFirstPetUser}} HTTP/1.1
+GET {{host}}/users/{{idUserLoged}}/pets/{{idFirstPetUser}} HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
 ### Add new search to pet
-POST http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
+POST {{host}}/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
@@ -119,59 +144,42 @@ Authorization: {{authToken}}
 }
 
 ### Get search id from user 
-GET http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
+GET {{host}}/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
 
 ### Get pet search
-GET http://localhost:8000/api/pets/{{idFirstPetUser}}/search HTTP/1.1
+GET {{host}}/pets/{{idFirstPetUser}}/search HTTP/1.1
 content-type: application/json
 
-### Get pet contact
-GET http://localhost:8000/api/pets/{{idNewPet}}/contact HTTP/1.1
+
+### Get Pet for pet screen
+GET {{host}}/pets/{{idFirstPetUser}} HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
+
+### Get pet contact
+GET {{host}}/pets/{{idNewPet}}/contact HTTP/1.1
+content-type: application/json
+Authorization: {{authToken}}
+
+
 ### Get pets arrownd position
-GET http://localhost:8000/api/lostpets HTTP/1.1
+GET {{host}}/lostpets HTTP/1.1
     ?lat=-35.515725
     &long=-58.325872
 content-type: application/json
 
-
 ### delete search from pet
-DELETE http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
+DELETE {{host}}/users/{{idUserLoged}}/pets/{{idNewPet}}/search HTTP/1.1
 content-type: application/json
 Authorization: {{authToken}}
 
 
-### Test image avatar UPLOAD user avatar 
-POST  http://localhost:8000/api/me/avatar
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: {{authToken}}
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="text"
-
-avatar
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="avatar"; filename="1.png"
-Content-Type: image/png
-
-< ./1.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-### Test image avatar OBTAIN user avatar
-get  http://localhost:8000/api/me/avatar
-Authorization: {{authToken}}
-### Test image avatar REMOVE user avatar
-DELETE   http://localhost:8000/api/me/avatar
-Authorization: {{authToken}}
-
-
-
-### Test image pets UPLOAD pet principal image
-POST  http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idFirstPetUser}}/pics
+### Test image pets UPLOAD pet principal image and extras
+POST  {{host}}/users/{{idUserLoged}}/pets/{{idFirstPetUser}}/pics
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 Authorization: {{authToken}}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -196,21 +204,21 @@ Content-Type: image/png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
-### remove pics pics1561313565493
-DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497ad9d/pics/principal1569179059043
+### remove pics from pet with image name
+DELETE   {{host}}/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497ad9d/pics/principal1569179059043
 Authorization: {{authToken}}
 
 
 ### remove pet 
-DELETE   http://localhost:8000/api/users/{{idUserLoged}}/pets/{{idFirstPetUser}}
+DELETE   {{host}}/users/{{idUserLoged}}/pets/{{idFirstPetUser}}
 Authorization: {{authToken}}
 
-###
-get   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497ad9d/pics/principal1569179059043
+### obtain pic , deprecated?
+get  {{host}}/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497ad9d/pics/principal1569179059043
 Authorization: {{authToken}}
 
 # ###
 # GET http://{{host}}/pets/{{idNewPet}}/principalPic
 
 ### 
-get http://{{host}}/searchs/5d89488ebffed6294249ebb9/pic
+get {{host}}/searchs/5d89488ebffed6294249ebb9/pic

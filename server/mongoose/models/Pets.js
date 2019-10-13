@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Searchs = mongoose.model("Searches_pet")
 const fs = require("fs")
 const { Schema } = mongoose
-const { SERVER_URL, PORT } = require("../config")
+const { SERVER_URL, PORT } = require("../../config")
 
 let PetsSchema = new Schema(
     {

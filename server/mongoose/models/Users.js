@@ -2,10 +2,9 @@ const mongoose = require("mongoose")
 const { Schema } = mongoose
 var bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-var { jwt_token } = require("../jwt_token")
+var { jwt_token } = require("../../jwt_token")
 var jwt_key = jwt_token()
 
-const Pet = require("./Pets")
 const PetsSchema = mongoose.model("Pets").schema
 
 var UsersSchema = new Schema(
@@ -55,6 +54,7 @@ class Person {
                         }
                     }
                 }
+                err.msj = "error saving the user"
                 return err
             })
     }
@@ -80,9 +80,14 @@ class Person {
     }
 
     static obtainFilePath(id, id_pet, id_pic) {
-        return this.findById(id).then(async user => {
-            return user.pets.id(id_pet).getDirPic(id_pic)
-        })
+        return this.findById(id)
+            .then(async user => {
+                return user.pets.id(id_pet).getDirPic(id_pic)
+            })
+            .catch(e => {
+                e.msj = "error trying to find id for user or pet"
+                throw e
+            })
     }
 
     static async findPetByIdPet(id) {
