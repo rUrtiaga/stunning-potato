@@ -35,6 +35,30 @@ var UsersSchema = new Schema(
 )
 
 class Person {
+    //Crea un nuevo usuario
+    static newUser(user_data) {
+        return this.create(user_data)
+            .then(newUser => {
+                newUser.setPassword(user_data.password)
+                newUser.save()
+                return newUser
+            })
+            .then(newUser => {
+                return newUser.toAuthJSON()
+            })
+            .catch(err => {
+                if (err.code == 11000) {
+                    return {
+                        errors: {
+                            message: "duplicated key for user",
+                            error: err
+                        }
+                    }
+                }
+                return err
+            })
+    }
+
     static findByPetId(id_pet) {
         return this.findOne({
             "pets._id": id_pet

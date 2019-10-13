@@ -8,9 +8,6 @@ const errorHandler = require("errorhandler")
 const passport = require("passport")
 const config = require("./config")
 
-//Configure mongoose's promise to global promise
-mongoose.promise = global.Promise
-
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === "production"
 
@@ -44,6 +41,10 @@ if (!isProduction) {
 }
 
 //Configure Mongoose
+
+//Configure mongoose's promise to global promise
+mongoose.promise = global.Promise
+
 const db = mongoose.connection
 const options = {
     useNewUrlParser: true,
@@ -110,7 +111,7 @@ app.use("/api", apiRouter)
 //     });
 //   }
 // });
-if (isProduction) {
+if (!isProduction) {
     app.use((err, req, res, next) => {
         console.log(err)
         if (res.headersSent) {

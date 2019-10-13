@@ -209,8 +209,8 @@ Authorization: {{authToken}}
 get   http://localhost:8000/api/users/{{idUserLoged}}/pets/5d87b66cf8efcf0d4497ad9d/pics/principal1569179059043
 Authorization: {{authToken}}
 
-###
-GET http://{{host}}/pets/{{idNewPet}}/principalPic
+# ###
+# GET http://{{host}}/pets/{{idNewPet}}/principalPic
 
 ### 
 get http://{{host}}/searchs/5d89488ebffed6294249ebb9/pic
