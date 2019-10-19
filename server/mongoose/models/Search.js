@@ -89,12 +89,13 @@ class Search {
             {
                 $addFields: {
                     pic: {
-                        $cond: {
-                            if: "$principalPicLocation",
-                            then: true,
-                            else: false
-                        }
+                        $cond: [
+                            { $eq: ["$principalPicLocation", ""] },
+                            false,
+                            true
+                        ]
                     }
+                    // pic: { $gt: ["$principalPicLocation", null] }
                 }
             },
             {

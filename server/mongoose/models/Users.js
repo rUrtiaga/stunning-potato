@@ -72,7 +72,9 @@ class Person {
         try {
             let user = await this.findByPetId(id_pet)
             let pet = await user.pets.id(id_pet)
-            return pet.newSearch(location, date)
+            let idSearch = pet.newSearch(location, date)
+            await user.save()
+            return idSearch
         } catch (error) {
             console.log(error)
         }

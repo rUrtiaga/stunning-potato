@@ -168,8 +168,7 @@ Authorization: {{authToken}}
 
 ### Get pets arrownd position
 GET {{host}}/lostpets HTTP/1.1
-    ?lat=-35.515725
-    &long=-58.325872
+    ?lat=-35.770438399999996&long=-58.48097550000001
 content-type: application/json
 
 ### delete search from pet
