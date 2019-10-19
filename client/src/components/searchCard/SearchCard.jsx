@@ -60,7 +60,7 @@ export default function SearchCard(props) {
                                     variant="body2"
                                     color="textSecondary"
                                 >
-                                    Distancia: {pet.distance}
+                                    Distancia: ~ {pet.distance} km
                                 </Typography>
                             </Grid>
                             <Grid item>

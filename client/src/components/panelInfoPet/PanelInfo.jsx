@@ -24,7 +24,7 @@ export default function PanelInfo(props) {
                 Perdido
             </Typography>
             <Divider variant="middle" />
-            <div style={{ margin: 2 + "em" }}>
+            <div>
                 <Grid container>
                     <Grid item xs={6}>
                         <Typography
