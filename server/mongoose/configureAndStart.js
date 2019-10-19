@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const config = require("../config")
 
-module.exports = isProduction => {
+module.exports = async isProduction => {
     //Configure mongoose's promise to global promise
     mongoose.promise = global.Promise
 
@@ -39,15 +39,17 @@ module.exports = isProduction => {
     //When status of dbConnection is disconnected, try to reconnect every some time
     db.on("disconnected", () => {
         console.log("MongoDB disconnected!")
-        setTimeout(function() {
-            console.log("MongoDB disconnected!")
-            mongoose.connect(config.MONGO_URL, options)
-        }, 5000)
+        if (isProduction) {
+            setTimeout(async function() {
+                console.log("MongoDB disconnected!")
+                await mongoose.connect(config.MONGO_URL, options)
+            }, 5000)
+        }
     })
     //Moongoose db set debugger only if production mode is disabled
-    mongoose.set("debug", isProduction)
+    mongoose.set("debug", !isProduction)
     //First try to connect to mongoDB server
-    mongoose.connect(config.MONGO_URL, options).catch(e => {
+    await mongoose.connect(config.MONGO_URL, options).catch(e => {
         console.log("DB connect ERROR", e)
     })
 
@@ -55,6 +57,5 @@ module.exports = isProduction => {
     require("./models/Search")
     require("./models/Pets")
     require("./models/Users")
-
     return mongoose
 }

@@ -43,8 +43,12 @@ if (!isProduction) {
 //Mongoose - configure and start
 mongooseStart(isProduction)
 
-//Configure passport library
+require("./mongoose/models/Search")
+require("./mongoose/models/Pets")
+require("./mongoose/models/Users")
+
 require("./config/passport")
+//Configure passport library
 
 var apiRouter = require("./routes/api")
 app.use("/api", apiRouter)
