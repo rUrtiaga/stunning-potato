@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 export default function(params) {
-  return <span>Cargando</span>;
+    return <span>Cargando</span>
 }
