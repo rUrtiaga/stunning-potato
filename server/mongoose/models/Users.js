@@ -5,7 +5,8 @@ const jwt = require("jsonwebtoken")
 var { jwt_token } = require("../../jwt_token")
 var jwt_key = jwt_token()
 
-const PetsSchema = mongoose.model("Pets").schema
+const Pets = mongoose.model("Pets")
+const PetsSchema = Pets.schema
 
 var UsersSchema = new Schema(
     {
@@ -13,7 +14,8 @@ var UsersSchema = new Schema(
         last_name: String,
         email: {
             type: String,
-            unique: true
+            unique: true,
+            required: true
         },
         phone: Number,
         password: String,
@@ -57,6 +59,23 @@ class Person {
                 err.msj = "error saving the user"
                 return err
             })
+    }
+
+    /**
+     * Crea un nuevo Search en una mascota especifica
+     * @param {id} id_user
+     * @param {id} id_pet
+     * @param {lat,lng} location
+     * @param {Date} date
+     */
+    static async newSearch(id_pet, location, date) {
+        try {
+            let user = await this.findByPetId(id_pet)
+            let pet = await user.pets.id(id_pet)
+            return pet.newSearch(location, date)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     static findByPetId(id_pet) {
