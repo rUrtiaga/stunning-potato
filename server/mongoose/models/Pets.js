@@ -8,6 +8,7 @@ let PetsSchema = new Schema(
     {
         name: String,
         species: String,
+        sex: String, //male/female
         age: String,
         description: String,
         search: {
@@ -33,6 +34,32 @@ class Pet {
     /**
      * Metodos de instancia
      */
+
+    async newSearch(location, date) {
+        let pet_search = {
+            pet: this._id,
+            name: this.name,
+            age: this.age,
+            species: this.species,
+            principalPicLocation: this.principalPic
+                ? this.principalPicDir()
+                : "",
+            location: location,
+            date: new Date(date)
+        }
+        if (this.search) {
+            await Searchs.findByIdAndDelete(this.search)
+        }
+        let mongo_search = new Searchs(pet_search)
+
+        //guardo el id de la busqueda en la mascota
+        this.search = mongo_search.id
+
+        //hago efectivo los cambios en db
+        await mongo_search.save()
+        console.log("Created NEW SEARCH on pet", this._id)
+        return mongo_search._id
+    }
 
     //devuelve la mascota para visualizar del lado del cliente
     toClient() {
