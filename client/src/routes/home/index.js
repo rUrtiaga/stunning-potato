@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
 import { Button, Grid, Typography, makeStyles } from "@material-ui/core"
 import bgImage from "../../assets/images/home/home.jpg"
@@ -41,12 +41,11 @@ export default function Home() {
                 <Grid container justify="center" align="center">
                     <Grid item xs={6} align="center">
                         <Button
-                            disabled
                             variant="contained"
                             color="primary"
                             size="large"
                             component={React.forwardRef((props, ref) => (
-                                <Link to="/" {...props} ref={ref} />
+                                <Link to="/lostPet" {...props} ref={ref} />
                             ))}
                         >
                             <Typography
