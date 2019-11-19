@@ -1,0 +1,8 @@
+FROM node:12.13.0-alpine
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+ENV MONGO_URL "mongodb://mongo:27017/pets"
+COPY . /usr/src/app
+RUN npm install
+EXPOSE 8000
+CMD ["npm", "run", "dev"]
