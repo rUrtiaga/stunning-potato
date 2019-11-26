@@ -13,6 +13,8 @@ services:
     build:
       context: ../../server
       dockerfile: Dockerfile-develop
+    volumes: # For webpack dev server to use our local files
+      - ../../server:/usr/src/app
     ports:
       - "8000:8000"
     links:
@@ -24,6 +26,8 @@ services:
     build:
       context: ../../client
       dockerfile: Dockerfile-develop
+    volumes: # For webpack dev server to use our local files
+      - ../../client:/usr/src/app
     environment:
       - API_BASE_URL = "server/api/"
     ports:
