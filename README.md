@@ -1,5 +1,7 @@
 # Mascotas
 
+# MOVIDO A : https://gitlab.com/rurtiaga/Mascotas
+
 aplicación para encontrar mascotas perdidas
 
 ## Levantar la aplicación
